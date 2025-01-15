@@ -25,7 +25,7 @@ module.exports = {
   },
 
   async checkUserRegistration(id) {
-    const response = await axios.get(`${BASE_URL}/users/${id}/exists`);
+    const response = await axios.get(`${BASE_URL}/users/check/${id}`);
     return response.data;
   },
 };
