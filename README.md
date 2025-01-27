@@ -13,6 +13,14 @@ docker build -t nutriscanun-api-gateway .
 docker run -d -p 3003:3003 --env-file .env --name nutriscanun-api-gateway-docker nutriscanun-api-gateway
 ```
 
+
+## Image Deploy
+
+```js
+docker tag nutriscanun-api-gateway juanxo074/nutriscanun-api-gateway:latest
+```
+
+
 ## Instructions to Deploy on Render
 Follow these steps to deploy your service on Render:
 
