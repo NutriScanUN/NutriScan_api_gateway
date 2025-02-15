@@ -11,7 +11,10 @@ export const resolvers: Resolvers = {
     },
     userQuery: (_, { id }, { dataSources }) => {
       return dataSources.listingAPI.getUserQuery(id);
-    }
+    },
+    getStores: (_, __, {dataSources}) => {
+      return dataSources.storeAPI.getStores();
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {
@@ -31,6 +34,25 @@ export const resolvers: Resolvers = {
           listing: response
         };
       } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    createUser: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.listingAPI.createUser(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Listing successfully created!",
+          listing: response
+        };
+      } catch (err) {
+        console.log(err.extensions.response.body)
         return {
           code: 500,
           success: false,

@@ -6,13 +6,23 @@ type userQuery {
 
 "A user data"
 type User {
-  uid: ID!
+  uid: String!
   nombres: String!
   email: String!
   url_imagen: String
   fecha_registro: String
   fecha_nacimiento: String
   rol: String
+}
+
+type Store {
+  tienda_id: ID!
+  uid: String
+  nombre: String
+  fecha_suscripcion: String
+  direccion: String
+  descripcion: String
+  fotos: String
 }
 
 "A particular intergalactic location available for booking"
@@ -47,11 +57,15 @@ type Query {
   listing(id: ID!): Listing
   "returns user query object"
   userQuery(id: ID!): userQuery
+  "Returns list of all stores"
+  getStores: [Store]
 }
 
 type Mutation {
   "Creates a new listing"
   createListing(input: CreateListingInput!): CreateListingResponse!
+  "creates a user"
+  createUser(input: CreateUserInput!): CreateUserResponse!
 }
 
 input CreateListingInput {
@@ -78,4 +92,23 @@ type CreateListingResponse {
   message: String!
   "The newly created listing"
   listing: Listing
+}
+
+input CreateUserInput {
+  uid: String!
+  nombres: String!
+  email: String!
+  url_imagen: String!
+  fecha_registro: String!
+  fecha_nacimiento: String!
+  rol: String! 
+}
+
+type CreateUserResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
 }

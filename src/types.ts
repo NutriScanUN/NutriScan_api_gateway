@@ -52,6 +52,26 @@ export type CreateListingResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type CreateUserInput = {
+  email: Scalars['String']['input'];
+  fecha_nacimiento: Scalars['String']['input'];
+  fecha_registro: Scalars['String']['input'];
+  nombres: Scalars['String']['input'];
+  rol: Scalars['String']['input'];
+  uid: Scalars['String']['input'];
+  url_imagen: Scalars['String']['input'];
+};
+
+export type CreateUserResponse = {
+  __typename?: 'CreateUserResponse';
+  /** Similar to HTTP status code, represents the status of the mutation */
+  code: Scalars['Int']['output'];
+  /** Human-readable message for the UI */
+  message: Scalars['String']['output'];
+  /** Indicates whether the mutation was successful */
+  success: Scalars['Boolean']['output'];
+};
+
 /** A particular intergalactic location available for booking */
 export type Listing = {
   __typename?: 'Listing';
@@ -74,6 +94,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Creates a new listing */
   createListing: CreateListingResponse;
+  /** creates a user */
+  createUser: CreateUserResponse;
 };
 
 
@@ -81,10 +103,17 @@ export type MutationCreateListingArgs = {
   input: CreateListingInput;
 };
 
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** A curated array of listings to feature on the homepage */
   featuredListings: Array<Listing>;
+  /** Returns list of all stores */
+  getStores?: Maybe<Array<Maybe<Store>>>;
   /** Returns the details about this listing */
   listing?: Maybe<Listing>;
   /** returns user query object */
@@ -101,6 +130,17 @@ export type QueryUserQueryArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type Store = {
+  __typename?: 'Store';
+  descripcion?: Maybe<Scalars['String']['output']>;
+  direccion?: Maybe<Scalars['String']['output']>;
+  fecha_suscripcion?: Maybe<Scalars['String']['output']>;
+  fotos?: Maybe<Scalars['String']['output']>;
+  nombre?: Maybe<Scalars['String']['output']>;
+  tienda_id: Scalars['ID']['output'];
+  uid?: Maybe<Scalars['String']['output']>;
+};
+
 /** A user data */
 export type User = {
   __typename?: 'User';
@@ -109,7 +149,7 @@ export type User = {
   fecha_registro?: Maybe<Scalars['String']['output']>;
   nombres: Scalars['String']['output'];
   rol?: Maybe<Scalars['String']['output']>;
-  uid: Scalars['ID']['output'];
+  uid: Scalars['String']['output'];
   url_imagen?: Maybe<Scalars['String']['output']>;
 };
 
@@ -195,12 +235,15 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
+  CreateUserInput: CreateUserInput;
+  CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Listing: ResolverTypeWrapper<Listing>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Store: ResolverTypeWrapper<Store>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
   userQuery: ResolverTypeWrapper<UserQuery>;
@@ -212,12 +255,15 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CreateListingInput: CreateListingInput;
   CreateListingResponse: CreateListingResponse;
+  CreateUserInput: CreateUserInput;
+  CreateUserResponse: CreateUserResponse;
   Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Listing: Listing;
   Mutation: {};
   Query: {};
+  Store: Store;
   String: Scalars['String']['output'];
   User: User;
   userQuery: UserQuery;
@@ -238,6 +284,13 @@ export type CreateListingResponseResolvers<ContextType = any, ParentType extends
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CreateUserResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserResponse'] = ResolversParentTypes['CreateUserResponse']> = {
+  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ListingResolvers<ContextType = any, ParentType extends ResolversParentTypes['Listing'] = ResolversParentTypes['Listing']> = {
   amenities?: Resolver<Array<ResolversTypes['Amenity']>, ParentType, ContextType>;
   closedForBookings?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -251,12 +304,25 @@ export type ListingResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
+  createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
   userQuery?: Resolver<Maybe<ResolversTypes['userQuery']>, ParentType, ContextType, RequireFields<QueryUserQueryArgs, 'id'>>;
+};
+
+export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = {
+  descripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  direccion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fecha_suscripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fotos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tienda_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -265,7 +331,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   fecha_registro?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nombres?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   rol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url_imagen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -279,9 +345,11 @@ export type UserQueryResolvers<ContextType = any, ParentType extends ResolversPa
 export type Resolvers<ContextType = any> = {
   Amenity?: AmenityResolvers<ContextType>;
   CreateListingResponse?: CreateListingResponseResolvers<ContextType>;
+  CreateUserResponse?: CreateUserResponseResolvers<ContextType>;
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Store?: StoreResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   userQuery?: UserQueryResolvers<ContextType>;
 };

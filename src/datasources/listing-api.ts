@@ -1,9 +1,9 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { Listing, Amenity, CreateListingInput, UserQuery } from "../types";
+import { Listing, Amenity, CreateListingInput, CreateUserInput, UserQuery, User, CreateUserResponse } from "../types";
 
 export class ListingAPI extends RESTDataSource {
   
-  baseURL = "https://nutriscan-api-gateway.onrender.com/api/users/";
+  baseURL = "https://nutriscan-api-gateway.onrender.com/";
   
   getFeaturedListings(): Promise<Listing[]> {
     return this.get<Listing[]>("featured-listings");
@@ -24,6 +24,11 @@ export class ListingAPI extends RESTDataSource {
   createListing(listing: CreateListingInput): Promise<Listing> {
     return this.post<Listing>("listings", {
       body: { listing }
+    });
+  }
+  createUser(user: CreateUserInput): Promise<any> {
+    return this.post<any>("/api/users", {
+      body: user
     });
   }
 }
