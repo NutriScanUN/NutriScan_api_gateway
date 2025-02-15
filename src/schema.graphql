@@ -25,6 +25,15 @@ type Store {
   fotos: String
 }
 
+type Historial {
+  id: ID!
+  id_producto: String
+  fecha_consumo: String
+  cantidad_consumida: Int
+  nutrientes_ingeridos: String
+  activo: Boolean
+}
+
 "A particular intergalactic location available for booking"
 type Listing {
   id: ID!
