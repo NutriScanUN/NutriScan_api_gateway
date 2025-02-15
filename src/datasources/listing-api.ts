@@ -21,6 +21,10 @@ export class ListingAPI extends RESTDataSource {
     return this.get<UserQuery>(`/api/users/${userId}`);
   }
 
+  deleteUser(userId: string): Promise<UserQuery> {
+    return this.delete<UserQuery>(`/api/users/${userId}`);
+  }
+
   createListing(listing: CreateListingInput): Promise<Listing> {
     return this.post<Listing>("listings", {
       body: { listing }

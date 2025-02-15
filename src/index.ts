@@ -5,6 +5,7 @@ import path from "path";
 import { gql } from "graphql-tag";
 import { resolvers } from "./resolvers";
 import { ListingAPI } from "./datasources/listing-api";
+import { StoreAPI } from "./datasources/store-api";
 
 const typeDefs = gql(
   readFileSync(path.resolve(__dirname, "./schema.graphql"), {
@@ -20,6 +21,7 @@ async function startApolloServer() {
       return {
         dataSources: {
           listingAPI: new ListingAPI({ cache }),
+          storeAPI: new StoreAPI({ cache }),
         },
       };
     },

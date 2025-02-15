@@ -14,7 +14,7 @@ export const resolvers: Resolvers = {
     },
     getStores: (_, __, {dataSources}) => {
       return dataSources.storeAPI.getStores();
-    },
+    }
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {
@@ -52,7 +52,6 @@ export const resolvers: Resolvers = {
           listing: response
         };
       } catch (err) {
-        console.log(err.extensions.response.body)
         return {
           code: 500,
           success: false,
@@ -61,5 +60,42 @@ export const resolvers: Resolvers = {
         };
       }
     },
+    createStore: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.storeAPI.createStore(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Listing successfully created!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    deleteStore: async (_, { id }, { dataSources }) => {
+      try {
+        const response = await dataSources.storeAPI.deleteStore(id);
+        return {
+          code: 200,
+          success: true,
+          message: "store deleted!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    
   },
 };

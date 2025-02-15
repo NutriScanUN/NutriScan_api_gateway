@@ -52,6 +52,16 @@ export type CreateListingResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type CreateStoreInput = {
+  descripcion?: InputMaybe<Scalars['String']['input']>;
+  direccion?: InputMaybe<Scalars['String']['input']>;
+  fecha_suscripcion?: InputMaybe<Scalars['String']['input']>;
+  fotos?: InputMaybe<Scalars['String']['input']>;
+  nombre?: InputMaybe<Scalars['String']['input']>;
+  tienda_id: Scalars['ID']['input'];
+  uid?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateUserInput = {
   email: Scalars['String']['input'];
   fecha_nacimiento: Scalars['String']['input'];
@@ -94,8 +104,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Creates a new listing */
   createListing: CreateListingResponse;
+  createStore: CreateUserResponse;
   /** creates a user */
   createUser: CreateUserResponse;
+  deleteStore: CreateUserResponse;
 };
 
 
@@ -104,8 +116,18 @@ export type MutationCreateListingArgs = {
 };
 
 
+export type MutationCreateStoreArgs = {
+  input: CreateStoreInput;
+};
+
+
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+
+export type MutationDeleteStoreArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type Query = {
@@ -235,6 +257,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
+  CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
@@ -255,6 +278,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CreateListingInput: CreateListingInput;
   CreateListingResponse: CreateListingResponse;
+  CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: CreateUserResponse;
   Float: Scalars['Float']['output'];
@@ -304,7 +328,9 @@ export type ListingResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
+  createStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'input'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
+  deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
