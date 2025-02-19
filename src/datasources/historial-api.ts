@@ -3,7 +3,7 @@ import { Store,CreateStoreInput } from "../types";
 
 export class HistorialAPI extends RESTDataSource {
   
-  baseURL = "https://nutriscan-historial-ms.onrender.com/";
+  baseURL = "http://historial-ms:3006/";
 
     getHistorial(userId :String): Promise<Store[]> {
       return this.get<Store[]>("api/consumption-history/"+userId+"/all");

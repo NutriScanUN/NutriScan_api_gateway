@@ -82,6 +82,16 @@ export type CreateUserResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type Historial = {
+  __typename?: 'Historial';
+  activo?: Maybe<Scalars['Boolean']['output']>;
+  cantidad_consumida?: Maybe<Scalars['Int']['output']>;
+  fecha_consumo?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  id_producto?: Maybe<Scalars['String']['output']>;
+  nutrientes_ingeridos?: Maybe<Scalars['String']['output']>;
+};
+
 /** A particular intergalactic location available for booking */
 export type Listing = {
   __typename?: 'Listing';
@@ -261,6 +271,7 @@ export type ResolversTypes = {
   CreateUserInput: CreateUserInput;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
+  Historial: ResolverTypeWrapper<Historial>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Listing: ResolverTypeWrapper<Listing>;
@@ -282,6 +293,7 @@ export type ResolversParentTypes = {
   CreateUserInput: CreateUserInput;
   CreateUserResponse: CreateUserResponse;
   Float: Scalars['Float']['output'];
+  Historial: Historial;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Listing: Listing;
@@ -312,6 +324,16 @@ export type CreateUserResponseResolvers<ContextType = any, ParentType extends Re
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HistorialResolvers<ContextType = any, ParentType extends ResolversParentTypes['Historial'] = ResolversParentTypes['Historial']> = {
+  activo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  cantidad_consumida?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  fecha_consumo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -372,6 +394,7 @@ export type Resolvers<ContextType = any> = {
   Amenity?: AmenityResolvers<ContextType>;
   CreateListingResponse?: CreateListingResponseResolvers<ContextType>;
   CreateUserResponse?: CreateUserResponseResolvers<ContextType>;
+  Historial?: HistorialResolvers<ContextType>;
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

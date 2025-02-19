@@ -3,7 +3,7 @@ import { Store,CreateStoreInput } from "../types";
 
 export class OffAPI extends RESTDataSource {
   
-  baseURL = "https://nutriscan-openfoodfacts-ms.onrender.com/";
+  baseURL = "http://openfoodfacts-ms:3004/";
 
     getStores(): Promise<Store[]> {
         console.log("getStore");
