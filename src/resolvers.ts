@@ -55,7 +55,7 @@ export const resolvers: Resolvers = {
         return {
           code: 500,
           success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
+          message: `Something went wrong: ${JSON.stringify(err)}`,
           listing: null
         };
       }

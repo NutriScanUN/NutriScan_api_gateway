@@ -2,4 +2,4 @@ services:
   api-gateway:
     build: .
     ports:
-      - "3003:3003"
+      - "4000:4000"
