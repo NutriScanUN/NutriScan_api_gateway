@@ -3,7 +3,7 @@ import { Listing, Amenity, CreateListingInput, CreateUserInput, UserQuery, User,
 
 export class ListingAPI extends RESTDataSource {
   
-  baseURL = "https://nutriscan-api-gateway.onrender.com/";
+  baseURL = "http://user-ms:3001/";
   
   getFeaturedListings(): Promise<Listing[]> {
     return this.get<Listing[]>("featured-listings");

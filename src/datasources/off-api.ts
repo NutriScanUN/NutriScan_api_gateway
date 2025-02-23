@@ -3,7 +3,7 @@ import { Off } from "../types";
 
 export class OffAPI extends RESTDataSource {
   
-  baseURL = "https://nutriscan-openfoodfacts-ms.onrender.com/";
+  baseURL = "http://openfoodfacts-ms:3004/";
 
   getOff(offId :String): Promise<Off[]> {
     return this.get<Off[]>("api/"+offId+"/all");
