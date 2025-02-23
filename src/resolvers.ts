@@ -14,7 +14,10 @@ export const resolvers: Resolvers = {
     },
     getStores: (_, __, {dataSources}) => {
       return dataSources.storeAPI.getStores();
-    }
+    },
+    getHistorials: (_, { id }, { dataSources }) => {
+      return dataSources.listingAPI.getHistorialQuery(id);
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {
