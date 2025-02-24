@@ -69,7 +69,9 @@ type Query {
   userQuery(id: ID!): userQuery
   "Returns list of all stores"
   getStores: [Store]
-  getHistorials(id: ID!): [Historial] 
+  getHistorials(id: ID!): [Historial]
+  getProducts: [Product]
+  getProducto(id: ID!): Product
 }
 
 type Mutation {
@@ -145,12 +147,22 @@ type Historial {
   activo: Boolean
 }
 
-type Producto {
+type ProductoOff {
   referencia: String
   nombre: String
   foto: String
   categorias: [String]
   nutriscore: String
+}
+
+type Product {
+  producto_id:ID!
+  tienda_id: Int
+  longitud: String
+  referencia: String
+  nombre: String
+  descripcion: String
+  foto: String
 }
 type infoProducto {
   carbohidratos: Float
@@ -176,6 +188,6 @@ type infoProducto {
 }
 
 type Off{
-  producto: [Producto]
+  productoOff: [ProductoOff]
   infoProducto: [infoProducto]
 }

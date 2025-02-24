@@ -18,6 +18,9 @@ export const resolvers: Resolvers = {
     getHistorials: (_, { id }, { dataSources }) => {
       return dataSources.listingAPI.getHistorialQuery(id);
     },
+    getProducts: (_, __, {dataSources}) => {
+      return dataSources.storeAPI.getProducts();
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {

@@ -143,11 +143,22 @@ export type MutationDeleteStoreArgs = {
 export type Off = {
   __typename?: 'Off';
   infoProducto?: Maybe<Array<Maybe<InfoProducto>>>;
-  producto?: Maybe<Array<Maybe<Producto>>>;
+  productoOff?: Maybe<Array<Maybe<ProductoOff>>>;
 };
 
-export type Producto = {
-  __typename?: 'Producto';
+export type Product = {
+  __typename?: 'Product';
+  descripcion?: Maybe<Scalars['String']['output']>;
+  foto?: Maybe<Scalars['String']['output']>;
+  longitud?: Maybe<Scalars['String']['output']>;
+  nombre?: Maybe<Scalars['String']['output']>;
+  producto_id: Scalars['ID']['output'];
+  referencia?: Maybe<Scalars['String']['output']>;
+  tienda_id?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ProductoOff = {
+  __typename?: 'ProductoOff';
   categorias?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   foto?: Maybe<Scalars['String']['output']>;
   nombre?: Maybe<Scalars['String']['output']>;
@@ -160,6 +171,8 @@ export type Query = {
   /** A curated array of listings to feature on the homepage */
   featuredListings: Array<Listing>;
   getHistorials?: Maybe<Array<Maybe<Historial>>>;
+  getProducto?: Maybe<Product>;
+  getProducts?: Maybe<Array<Maybe<Product>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
   /** Returns the details about this listing */
@@ -170,6 +183,11 @@ export type Query = {
 
 
 export type QueryGetHistorialsArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetProductoArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -322,7 +340,8 @@ export type ResolversTypes = {
   Listing: ResolverTypeWrapper<Listing>;
   Mutation: ResolverTypeWrapper<{}>;
   Off: ResolverTypeWrapper<Off>;
-  Producto: ResolverTypeWrapper<Producto>;
+  Product: ResolverTypeWrapper<Product>;
+  ProductoOff: ResolverTypeWrapper<ProductoOff>;
   Query: ResolverTypeWrapper<{}>;
   Store: ResolverTypeWrapper<Store>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -347,7 +366,8 @@ export type ResolversParentTypes = {
   Listing: Listing;
   Mutation: {};
   Off: Off;
-  Producto: Producto;
+  Product: Product;
+  ProductoOff: ProductoOff;
   Query: {};
   Store: Store;
   String: Scalars['String']['output'];
@@ -408,11 +428,22 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type OffResolvers<ContextType = any, ParentType extends ResolversParentTypes['Off'] = ResolversParentTypes['Off']> = {
   infoProducto?: Resolver<Maybe<Array<Maybe<ResolversTypes['infoProducto']>>>, ParentType, ContextType>;
-  producto?: Resolver<Maybe<Array<Maybe<ResolversTypes['Producto']>>>, ParentType, ContextType>;
+  productoOff?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProductoOff']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProductoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Producto'] = ResolversParentTypes['Producto']> = {
+export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  descripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  foto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  longitud?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  producto_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  referencia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tienda_id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductoOffResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductoOff'] = ResolversParentTypes['ProductoOff']> = {
   categorias?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   foto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -424,6 +455,8 @@ export type ProductoResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
   getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
+  getProducto?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductoArgs, 'id'>>;
+  getProducts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
   userQuery?: Resolver<Maybe<ResolversTypes['userQuery']>, ParentType, ContextType, RequireFields<QueryUserQueryArgs, 'id'>>;
@@ -489,7 +522,8 @@ export type Resolvers<ContextType = any> = {
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Off?: OffResolvers<ContextType>;
-  Producto?: ProductoResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
+  ProductoOff?: ProductoOffResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
