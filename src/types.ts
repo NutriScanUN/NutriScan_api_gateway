@@ -170,16 +170,24 @@ export type Query = {
   __typename?: 'Query';
   /** A curated array of listings to feature on the homepage */
   featuredListings: Array<Listing>;
+  getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
   getHistorials?: Maybe<Array<Maybe<Historial>>>;
   getProduct?: Maybe<Product>;
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
+  getProductByUser?: Maybe<Array<Maybe<Product>>>;
   getProducts: Array<Maybe<Product>>;
+  getStoreByUser?: Maybe<Array<Maybe<Store>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
   /** Returns the details about this listing */
   listing?: Maybe<Listing>;
   /** returns user query object */
   userQuery?: Maybe<UserQuery>;
+};
+
+
+export type QueryGetGetProductAndStoreArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -195,6 +203,16 @@ export type QueryGetProductArgs = {
 
 export type QueryGetProductByStoreArgs = {
   storeId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetProductByUserArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetStoreByUserArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -460,10 +478,13 @@ export type ProductoOffResolvers<ContextType = any, ParentType extends Resolvers
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
   getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
   getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
+  getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
   getProducts?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
+  getStoreByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetStoreByUserArgs>>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
   userQuery?: Resolver<Maybe<ResolversTypes['userQuery']>, ParentType, ContextType, RequireFields<QueryUserQueryArgs, 'id'>>;

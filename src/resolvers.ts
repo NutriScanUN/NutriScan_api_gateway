@@ -24,6 +24,18 @@ export const resolvers: Resolvers = {
     getProductByStore: (_, { storeId }, {dataSources}) => {
       return dataSources.storeAPI.getProductsByStore(storeId);
     },
+    getProduct: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProduct(id);
+    },
+    getStoreByUser: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getStoreByUser(id);
+    },
+    getProductByUser: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProductByUser(id);
+    },
+    getGetProductAndStore: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProductAndStore(id);
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {

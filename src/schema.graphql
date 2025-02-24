@@ -73,6 +73,9 @@ type Query {
   getProducts: [Product]!
   getProduct(id: ID!): Product
   getProductByStore(storeId: Int): [Product]
+  getStoreByUser(id:String):[Store]
+  getProductByUser(id:String):[Product]
+  getGetProductAndStore(id:String):[Store]
 }
 
 type Mutation {
