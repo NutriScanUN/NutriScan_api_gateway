@@ -20,6 +20,6 @@ FROM build AS start
 COPY --from=build /app/src/schema.graphql /app/dist/schema.graphql
 
 # Exponer el puerto
-EXPOSE 4000
+EXPOSE 3003
 # Comando para iniciar la aplicación
 CMD ["node", "dist/index.js"]
