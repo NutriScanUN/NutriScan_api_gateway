@@ -13,10 +13,13 @@ export class StoreAPI extends RESTDataSource {
           body: store
         });
     }
-    deleteStore(storeId: string): Promise<any> {
+    deleteStore(storeId: String): Promise<any> {
         return this.delete<any>(`/api/store/${storeId}`);
       }
     getProducts(): Promise<Product[]> {
       return this.get<Product[]>("api/product/all");
+    }
+    getProductByStore(storeId: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/product/store/${storeId}`);
     }
 }

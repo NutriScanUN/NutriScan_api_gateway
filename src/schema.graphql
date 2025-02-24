@@ -16,7 +16,7 @@ type User {
 }
 
 type Store {
-  tienda_id: ID!
+  id_tienda: ID!
   uid: String
   nombre: String
   fecha_suscripcion: String
@@ -70,8 +70,9 @@ type Query {
   "Returns list of all stores"
   getStores: [Store]
   getHistorials(id: ID!): [Historial]
-  getProducts: [Product]
-  getProducto(id: ID!): Product
+  getProducts: [Product]!
+  getProduct(id: ID!): Product
+  getProductByStore(storeId: Int): [Product]
 }
 
 type Mutation {
@@ -156,14 +157,15 @@ type ProductoOff {
 }
 
 type Product {
-  producto_id:ID!
-  tienda_id: Int
-  longitud: String
+  id_producto:ID
   referencia: String
   nombre: String
   descripcion: String
-  foto: String
+  url_imagen: String
+  created_at:String
+  updated_at:String
 }
+
 type infoProducto {
   carbohidratos: Float
   unidadCarbohidratos: String
