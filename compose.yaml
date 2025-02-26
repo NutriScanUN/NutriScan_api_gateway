@@ -2,5 +2,4 @@ services:
   api-gateway:
     build: .
     ports:
-      - "3003:3003"
-    env_file: ".env"
+      - "3003:4000"
