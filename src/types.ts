@@ -52,6 +52,16 @@ export type CreateListingResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type CreateProductInput = {
+  created_at?: InputMaybe<Scalars['String']['input']>;
+  descripcion?: InputMaybe<Scalars['String']['input']>;
+  id_producto?: InputMaybe<Scalars['ID']['input']>;
+  nombre?: InputMaybe<Scalars['String']['input']>;
+  referencia?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['String']['input']>;
+  url_imagen?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateStoreInput = {
   descripcion?: InputMaybe<Scalars['String']['input']>;
   direccion?: InputMaybe<Scalars['String']['input']>;
@@ -114,6 +124,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Creates a new listing */
   createListing: CreateListingResponse;
+  createProduct: CreateUserResponse;
   createStore: CreateUserResponse;
   /** creates a user */
   createUser: CreateUserResponse;
@@ -123,6 +134,11 @@ export type Mutation = {
 
 export type MutationCreateListingArgs = {
   input: CreateListingInput;
+};
+
+
+export type MutationCreateProductArgs = {
+  input: CreateProductInput;
 };
 
 
@@ -354,6 +370,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
+  CreateProductInput: CreateProductInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
@@ -380,6 +397,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CreateListingInput: CreateListingInput;
   CreateListingResponse: CreateListingResponse;
+  CreateProductInput: CreateProductInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: CreateUserResponse;
@@ -445,6 +463,7 @@ export type ListingResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
+  createProduct?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
   createStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'input'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;

@@ -69,7 +69,7 @@ export const resolvers: Resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Listing successfully created!",
+          message: "user successfully created!",
           listing: response
         };
       } catch (err) {
@@ -87,7 +87,25 @@ export const resolvers: Resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Listing successfully created!",
+          message: "Store successfully created!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    createProduct: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.storeAPI.createProduct(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Product successfully created!",
           listing: response
         };
       } catch (err) {
