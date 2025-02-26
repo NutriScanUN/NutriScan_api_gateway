@@ -86,6 +86,7 @@ type Mutation {
   createStore(input: CreateStoreInput!): CreateUserResponse!
   deleteStore(id: ID!): CreateUserResponse!
   createProduct(input: CreateProductInput!): CreateUserResponse!
+  updateUser(input: CreateUserInput!): CreateUserResponse!
 }
 
 input CreateListingInput {

@@ -129,6 +129,7 @@ export type Mutation = {
   /** creates a user */
   createUser: CreateUserResponse;
   deleteStore: CreateUserResponse;
+  updateUser: CreateUserResponse;
 };
 
 
@@ -154,6 +155,11 @@ export type MutationCreateUserArgs = {
 
 export type MutationDeleteStoreArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  input: CreateUserInput;
 };
 
 export type Off = {
@@ -467,6 +473,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'input'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
+  updateUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
 };
 
 export type OffResolvers<ContextType = any, ParentType extends ResolversParentTypes['Off'] = ResolversParentTypes['Off']> = {

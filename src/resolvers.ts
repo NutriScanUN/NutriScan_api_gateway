@@ -81,6 +81,24 @@ export const resolvers: Resolvers = {
         };
       }
     },
+    updateUser: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.listingAPI.createUser(input);
+        return {
+          code: 200,
+          success: true,
+          message: "user successfully edited!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${JSON.stringify(err)}`,
+          listing: null
+        };
+      }
+    },
     createStore: async (_, { input }, { dataSources }) => {
       try {
         const response = await dataSources.storeAPI.createStore(input);
