@@ -14,7 +14,28 @@ export const resolvers: Resolvers = {
     },
     getStores: (_, __, {dataSources}) => {
       return dataSources.storeAPI.getStores();
-    }
+    },
+    getHistorials: (_, { id }, { dataSources }) => {
+      return dataSources.listingAPI.getHistorialQuery(id);
+    },
+    getProducts: (_, __, {dataSources}) => {
+      return dataSources.storeAPI.getProducts();
+    },
+    getProductByStore: (_, { storeId }, {dataSources}) => {
+      return dataSources.storeAPI.getProductsByStore(storeId);
+    },
+    getProduct: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProduct(id);
+    },
+    getStoreByUser: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getStoreByUser(id);
+    },
+    getProductByUser: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProductByUser(id);
+    },
+    getGetProductAndStore: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getProductAndStore(id);
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {
@@ -55,7 +76,7 @@ export const resolvers: Resolvers = {
         return {
           code: 500,
           success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
+          message: `Something went wrong: ${JSON.stringify(err)}`,
           listing: null
         };
       }

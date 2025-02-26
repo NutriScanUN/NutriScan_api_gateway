@@ -140,16 +140,79 @@ export type MutationDeleteStoreArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type Off = {
+  __typename?: 'Off';
+  infoProducto?: Maybe<Array<Maybe<InfoProducto>>>;
+  productoOff?: Maybe<Array<Maybe<ProductoOff>>>;
+};
+
+export type Product = {
+  __typename?: 'Product';
+  created_at?: Maybe<Scalars['String']['output']>;
+  descripcion?: Maybe<Scalars['String']['output']>;
+  id_producto?: Maybe<Scalars['ID']['output']>;
+  nombre?: Maybe<Scalars['String']['output']>;
+  referencia?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['String']['output']>;
+  url_imagen?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProductoOff = {
+  __typename?: 'ProductoOff';
+  categorias?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  foto?: Maybe<Scalars['String']['output']>;
+  nombre?: Maybe<Scalars['String']['output']>;
+  nutriscore?: Maybe<Scalars['String']['output']>;
+  referencia?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** A curated array of listings to feature on the homepage */
   featuredListings: Array<Listing>;
+  getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
+  getHistorials?: Maybe<Array<Maybe<Historial>>>;
+  getProduct?: Maybe<Product>;
+  getProductByStore?: Maybe<Array<Maybe<Product>>>;
+  getProductByUser?: Maybe<Array<Maybe<Product>>>;
+  getProducts: Array<Maybe<Product>>;
+  getStoreByUser?: Maybe<Array<Maybe<Store>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
   /** Returns the details about this listing */
   listing?: Maybe<Listing>;
   /** returns user query object */
   userQuery?: Maybe<UserQuery>;
+};
+
+
+export type QueryGetGetProductAndStoreArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetHistorialsArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetProductArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetProductByStoreArgs = {
+  storeId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetProductByUserArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetStoreByUserArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -168,8 +231,8 @@ export type Store = {
   direccion?: Maybe<Scalars['String']['output']>;
   fecha_suscripcion?: Maybe<Scalars['String']['output']>;
   fotos?: Maybe<Scalars['String']['output']>;
+  id_tienda: Scalars['ID']['output'];
   nombre?: Maybe<Scalars['String']['output']>;
-  tienda_id: Scalars['ID']['output'];
   uid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -183,6 +246,30 @@ export type User = {
   rol?: Maybe<Scalars['String']['output']>;
   uid: Scalars['String']['output'];
   url_imagen?: Maybe<Scalars['String']['output']>;
+};
+
+export type InfoProducto = {
+  __typename?: 'infoProducto';
+  azucar?: Maybe<Scalars['Float']['output']>;
+  cantidad?: Maybe<Scalars['Int']['output']>;
+  carbohidratos?: Maybe<Scalars['Float']['output']>;
+  energia?: Maybe<Scalars['Float']['output']>;
+  fibra?: Maybe<Scalars['Float']['output']>;
+  grasaSaturada?: Maybe<Scalars['Float']['output']>;
+  grasas?: Maybe<Scalars['Float']['output']>;
+  imagenFrontalUrl?: Maybe<Scalars['String']['output']>;
+  nivelesAltos?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  proteina?: Maybe<Scalars['Float']['output']>;
+  sodio?: Maybe<Scalars['Float']['output']>;
+  unidadAzucar?: Maybe<Scalars['String']['output']>;
+  unidadCantidad?: Maybe<Scalars['String']['output']>;
+  unidadCarbohidratos?: Maybe<Scalars['String']['output']>;
+  unidadEnergia?: Maybe<Scalars['String']['output']>;
+  unidadFibra?: Maybe<Scalars['String']['output']>;
+  unidadGrasaSaturada?: Maybe<Scalars['String']['output']>;
+  unidadGrasas?: Maybe<Scalars['String']['output']>;
+  unidadProteina?: Maybe<Scalars['String']['output']>;
+  unidadSodio?: Maybe<Scalars['String']['output']>;
 };
 
 /** A response from user api */
@@ -276,10 +363,14 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Listing: ResolverTypeWrapper<Listing>;
   Mutation: ResolverTypeWrapper<{}>;
+  Off: ResolverTypeWrapper<Off>;
+  Product: ResolverTypeWrapper<Product>;
+  ProductoOff: ResolverTypeWrapper<ProductoOff>;
   Query: ResolverTypeWrapper<{}>;
   Store: ResolverTypeWrapper<Store>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
+  infoProducto: ResolverTypeWrapper<InfoProducto>;
   userQuery: ResolverTypeWrapper<UserQuery>;
 };
 
@@ -298,10 +389,14 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   Listing: Listing;
   Mutation: {};
+  Off: Off;
+  Product: Product;
+  ProductoOff: ProductoOff;
   Query: {};
   Store: Store;
   String: Scalars['String']['output'];
   User: User;
+  infoProducto: InfoProducto;
   userQuery: UserQuery;
 };
 
@@ -355,8 +450,41 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
 };
 
+export type OffResolvers<ContextType = any, ParentType extends ResolversParentTypes['Off'] = ResolversParentTypes['Off']> = {
+  infoProducto?: Resolver<Maybe<Array<Maybe<ResolversTypes['infoProducto']>>>, ParentType, ContextType>;
+  productoOff?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProductoOff']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  descripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_producto?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  referencia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  url_imagen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductoOffResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductoOff'] = ResolversParentTypes['ProductoOff']> = {
+  categorias?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  foto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nutriscore?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  referencia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
+  getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
+  getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
+  getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
+  getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
+  getProducts?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
+  getStoreByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetStoreByUserArgs>>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
   userQuery?: Resolver<Maybe<ResolversTypes['userQuery']>, ParentType, ContextType, RequireFields<QueryUserQueryArgs, 'id'>>;
@@ -367,8 +495,8 @@ export type StoreResolvers<ContextType = any, ParentType extends ResolversParent
   direccion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fecha_suscripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fotos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_tienda?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  tienda_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -381,6 +509,30 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   rol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url_imagen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type InfoProductoResolvers<ContextType = any, ParentType extends ResolversParentTypes['infoProducto'] = ResolversParentTypes['infoProducto']> = {
+  azucar?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  cantidad?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  carbohidratos?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  energia?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  fibra?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  grasaSaturada?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  grasas?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  imagenFrontalUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nivelesAltos?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  proteina?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  sodio?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  unidadAzucar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadCantidad?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadCarbohidratos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadEnergia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadFibra?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadGrasaSaturada?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadGrasas?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadProteina?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  unidadSodio?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -397,9 +549,13 @@ export type Resolvers<ContextType = any> = {
   Historial?: HistorialResolvers<ContextType>;
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Off?: OffResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
+  ProductoOff?: ProductoOffResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  infoProducto?: InfoProductoResolvers<ContextType>;
   userQuery?: UserQueryResolvers<ContextType>;
 };
 

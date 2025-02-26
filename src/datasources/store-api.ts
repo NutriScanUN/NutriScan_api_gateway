@@ -1,12 +1,11 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { Store,CreateStoreInput } from "../types";
+import { Store,CreateStoreInput,Product } from "../types";
 
 export class StoreAPI extends RESTDataSource {
   
   baseURL = "http://store-ms:3005/";
 
     getStores(): Promise<Store[]> {
-        console.log("getStore");
       return this.get<Store[]>("api/store/all");
     }
     createStore(store: CreateStoreInput): Promise<any> {
@@ -14,8 +13,25 @@ export class StoreAPI extends RESTDataSource {
           body: store
         });
     }
-    deleteStore(storeId: string): Promise<any> {
+    deleteStore(storeId: String): Promise<any> {
         return this.delete<any>(`/api/store/${storeId}`);
       }
-
+    getProducts(): Promise<Product[]> {
+      return this.get<Product[]>("api/product/all");
+    }
+    getProductByStore(storeId: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/product/store/${storeId}`);
+    }
+    getProduct(id: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/product/${id}`);
+    }
+    getStoreByUser(id: String): Promise<Store[]> {
+      return this.get<Store[]>(`api/store/user/${id}`);
+    }
+    getProductByUser(id: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/store/user/${id}/products`);
+    }
+    getProductAndStore(id: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/store/${id}/products`);
+    }
 }

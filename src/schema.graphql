@@ -16,7 +16,7 @@ type User {
 }
 
 type Store {
-  tienda_id: ID!
+  id_tienda: ID!
   uid: String
   nombre: String
   fecha_suscripcion: String
@@ -33,6 +33,7 @@ type Historial {
   nutrientes_ingeridos: String
   activo: Boolean
 }
+
 
 "A particular intergalactic location available for booking"
 type Listing {
@@ -68,6 +69,13 @@ type Query {
   userQuery(id: ID!): userQuery
   "Returns list of all stores"
   getStores: [Store]
+  getHistorials(id: ID!): [Historial]
+  getProducts: [Product]!
+  getProduct(id: ID!): Product
+  getProductByStore(storeId: Int): [Product]
+  getStoreByUser(id:String):[Store]
+  getProductByUser(id:String):[Product]
+  getGetProductAndStore(id:String):[Store]
 }
 
 type Mutation {
@@ -132,4 +140,59 @@ type CreateUserResponse {
   success: Boolean!
   "Human-readable message for the UI"
   message: String!
+}
+
+type Historial {
+  id: ID!
+  id_producto: String
+  fecha_consumo: String
+  cantidad_consumida: Int
+  nutrientes_ingeridos: String
+  activo: Boolean
+}
+
+type ProductoOff {
+  referencia: String
+  nombre: String
+  foto: String
+  categorias: [String]
+  nutriscore: String
+}
+
+type Product {
+  id_producto:ID
+  referencia: String
+  nombre: String
+  descripcion: String
+  url_imagen: String
+  created_at:String
+  updated_at:String
+}
+
+type infoProducto {
+  carbohidratos: Float
+  unidadCarbohidratos: String
+  grasas: Float
+  unidadGrasas: String
+  grasaSaturada: Float
+  unidadGrasaSaturada: String
+  azucar: Float
+  unidadAzucar: String
+  proteina: Float
+  unidadProteina: String
+  sodio: Float
+  unidadSodio: String
+  fibra: Float
+  unidadFibra: String
+  energia: Float
+  unidadEnergia: String
+  cantidad: Int
+  unidadCantidad: String
+  imagenFrontalUrl: String
+  nivelesAltos: [String]
+}
+
+type Off{
+  productoOff: [ProductoOff]
+  infoProducto: [infoProducto]
 }
