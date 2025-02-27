@@ -25,6 +25,15 @@ export type Amenity = {
   name: Scalars['String']['output'];
 };
 
+export type CreateHistorialInput = {
+  activo?: InputMaybe<Scalars['Boolean']['input']>;
+  cantidad_consumida?: InputMaybe<Scalars['Int']['input']>;
+  fecha_consumo?: InputMaybe<Scalars['String']['input']>;
+  id_producto?: InputMaybe<Scalars['String']['input']>;
+  nutrientes_ingeridos?: InputMaybe<Scalars['String']['input']>;
+  uid?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateListingInput = {
   /** The Listing's amenities */
   amenities: Array<Scalars['ID']['input']>;
@@ -60,6 +69,16 @@ export type CreateProductInput = {
   referencia?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['String']['input']>;
   url_imagen?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateSearchInput = {
+  activo?: InputMaybe<Scalars['Boolean']['input']>;
+  fecha_busqueda?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  id_producto?: InputMaybe<Scalars['String']['input']>;
+  id_tienda?: InputMaybe<Scalars['String']['input']>;
+  redireccion_tienda?: InputMaybe<Scalars['Boolean']['input']>;
+  uid: Scalars['String']['input'];
 };
 
 export type CreateStoreInput = {
@@ -122,14 +141,21 @@ export type Listing = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createHistorial: CreateUserResponse;
   /** Creates a new listing */
   createListing: CreateListingResponse;
   createProduct: CreateUserResponse;
+  createSearch: CreateUserResponse;
   createStore: CreateUserResponse;
   /** creates a user */
   createUser: CreateUserResponse;
   deleteStore: CreateUserResponse;
   updateUser: CreateUserResponse;
+};
+
+
+export type MutationCreateHistorialArgs = {
+  input: CreateHistorialInput;
 };
 
 
@@ -140,6 +166,11 @@ export type MutationCreateListingArgs = {
 
 export type MutationCreateProductArgs = {
   input: CreateProductInput;
+};
+
+
+export type MutationCreateSearchArgs = {
+  input: CreateSearchInput;
 };
 
 
@@ -194,10 +225,12 @@ export type Query = {
   featuredListings: Array<Listing>;
   getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
   getHistorials?: Maybe<Array<Maybe<Historial>>>;
+  getHistorialsByDay?: Maybe<Array<Maybe<Historial>>>;
   getProduct?: Maybe<Product>;
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
   getProductByUser?: Maybe<Array<Maybe<Product>>>;
   getProducts: Array<Maybe<Product>>;
+  getSearch?: Maybe<Array<Maybe<Search>>>;
   getStoreByUser?: Maybe<Array<Maybe<Store>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
@@ -218,6 +251,12 @@ export type QueryGetHistorialsArgs = {
 };
 
 
+export type QueryGetHistorialsByDayArgs = {
+  days?: InputMaybe<Scalars['Int']['input']>;
+  id: Scalars['ID']['input'];
+};
+
+
 export type QueryGetProductArgs = {
   id: Scalars['ID']['input'];
 };
@@ -229,6 +268,11 @@ export type QueryGetProductByStoreArgs = {
 
 
 export type QueryGetProductByUserArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetSearchArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -245,6 +289,16 @@ export type QueryListingArgs = {
 
 export type QueryUserQueryArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type Search = {
+  __typename?: 'Search';
+  activo?: Maybe<Scalars['Boolean']['output']>;
+  fecha_busqueda?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  id_producto?: Maybe<Scalars['String']['output']>;
+  id_tienda?: Maybe<Scalars['String']['output']>;
+  redireccion_tienda?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Store = {
@@ -268,6 +322,12 @@ export type User = {
   rol?: Maybe<Scalars['String']['output']>;
   uid: Scalars['String']['output'];
   url_imagen?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserDays = {
+  __typename?: 'UserDays';
+  days?: Maybe<Scalars['Int']['output']>;
+  uid: Scalars['String']['output'];
 };
 
 export type InfoProducto = {
@@ -374,9 +434,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Amenity: ResolverTypeWrapper<Amenity>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  CreateHistorialInput: CreateHistorialInput;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
   CreateProductInput: CreateProductInput;
+  CreateSearchInput: CreateSearchInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
@@ -390,9 +452,11 @@ export type ResolversTypes = {
   Product: ResolverTypeWrapper<Product>;
   ProductoOff: ResolverTypeWrapper<ProductoOff>;
   Query: ResolverTypeWrapper<{}>;
+  Search: ResolverTypeWrapper<Search>;
   Store: ResolverTypeWrapper<Store>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
+  UserDays: ResolverTypeWrapper<UserDays>;
   infoProducto: ResolverTypeWrapper<InfoProducto>;
   userQuery: ResolverTypeWrapper<UserQuery>;
 };
@@ -401,9 +465,11 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Amenity: Amenity;
   Boolean: Scalars['Boolean']['output'];
+  CreateHistorialInput: CreateHistorialInput;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: CreateListingResponse;
   CreateProductInput: CreateProductInput;
+  CreateSearchInput: CreateSearchInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: CreateUserResponse;
@@ -417,9 +483,11 @@ export type ResolversParentTypes = {
   Product: Product;
   ProductoOff: ProductoOff;
   Query: {};
+  Search: Search;
   Store: Store;
   String: Scalars['String']['output'];
   User: User;
+  UserDays: UserDays;
   infoProducto: InfoProducto;
   userQuery: UserQuery;
 };
@@ -468,8 +536,10 @@ export type ListingResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createHistorial?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateHistorialArgs, 'input'>>;
   createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
   createProduct?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
+  createSearch?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateSearchArgs, 'input'>>;
   createStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'input'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
@@ -506,14 +576,26 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
   getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
   getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
+  getHistorialsByDay?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsByDayArgs, 'id'>>;
   getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
   getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
   getProducts?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
+  getSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['Search']>>>, ParentType, ContextType, Partial<QueryGetSearchArgs>>;
   getStoreByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetStoreByUserArgs>>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
   userQuery?: Resolver<Maybe<ResolversTypes['userQuery']>, ParentType, ContextType, RequireFields<QueryUserQueryArgs, 'id'>>;
+};
+
+export type SearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Search'] = ResolversParentTypes['Search']> = {
+  activo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  fecha_busqueda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_tienda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  redireccion_tienda?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = {
@@ -535,6 +617,12 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   rol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url_imagen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserDaysResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserDays'] = ResolversParentTypes['UserDays']> = {
+  days?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -579,8 +667,10 @@ export type Resolvers<ContextType = any> = {
   Product?: ProductResolvers<ContextType>;
   ProductoOff?: ProductoOffResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Search?: SearchResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserDays?: UserDaysResolvers<ContextType>;
   infoProducto?: InfoProductoResolvers<ContextType>;
   userQuery?: UserQueryResolvers<ContextType>;
 };

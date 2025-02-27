@@ -34,6 +34,20 @@ type Historial {
   activo: Boolean
 }
 
+type Search {
+  id: ID!
+  fecha_busqueda: String
+  id_producto: String
+  redireccion_tienda: Boolean
+  id_tienda: String
+  activo: Boolean
+}
+
+type UserDays {
+  uid: String!
+  days: Int
+}
+
 
 "A particular intergalactic location available for booking"
 type Listing {
@@ -76,6 +90,8 @@ type Query {
   getStoreByUser(id:String):[Store]
   getProductByUser(id:String):[Product]
   getGetProductAndStore(id:String):[Store]
+  getHistorialsByDay(id: ID!, days : Int): [Historial]
+  getSearch(id:String):[Search]
 }
 
 type Mutation {
@@ -87,6 +103,8 @@ type Mutation {
   deleteStore(id: ID!): CreateUserResponse!
   createProduct(input: CreateProductInput!): CreateUserResponse!
   updateUser(input: CreateUserInput!): CreateUserResponse!
+  createHistorial(input: CreateHistorialInput!): CreateUserResponse!
+  createSearch(input: CreateSearchInput!): CreateUserResponse!
 }
 
 input CreateListingInput {
@@ -143,6 +161,25 @@ input CreateProductInput {
   url_imagen: String
   created_at:String
   updated_at:String
+}
+
+input CreateHistorialInput {
+  uid: String
+  id_producto: String
+  fecha_consumo: String
+  cantidad_consumida: Int
+  nutrientes_ingeridos: String
+  activo: Boolean
+}
+
+input CreateSearchInput {
+  id: ID!
+  uid: String!
+  fecha_busqueda: String
+  id_producto: String
+  redireccion_tienda: Boolean
+  id_tienda: String
+  activo: Boolean
 }
 
 type CreateUserResponse {

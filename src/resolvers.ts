@@ -153,6 +153,41 @@ export const resolvers: Resolvers = {
         };
       }
     },
-    
-  },
+    createHistorial: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.historialAPI.createHistorial(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Historial successfully created!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    createSearch: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.historialAPI.createsearch(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Search successfully created!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+  }
 };
