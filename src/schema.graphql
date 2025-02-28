@@ -1,7 +1,7 @@
 "A response from user api"
 type userQuery {
-  sucess: Boolean!
-  data: User
+  success: Boolean!
+  data: User!
 }
 
 "A user data"
@@ -30,7 +30,7 @@ type Historial {
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: String
+  nutrientes_ingeridos: NutrientesIngeridos
   activo: Boolean
 }
 
@@ -143,12 +143,12 @@ type CreateListingResponse {
 
 input CreateUserInput {
   uid: String!
-  nombres: String!
-  email: String!
-  url_imagen: String!
-  fecha_registro: String!
-  fecha_nacimiento: String!
-  rol: String! 
+  nombres: String
+  email: String
+  url_imagen: String
+  fecha_registro: String
+  fecha_nacimiento: String
+  rol: String
 }
 
 input CreateStoreInput {
@@ -171,12 +171,17 @@ input CreateProductInput {
   updated_at:String
 }
 
+type NutrientesIngeridos {
+  carbohidaratos: Int
+  liquido: int
+}
+
 input CreateHistorialInput {
   uid: String
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: String
+  nutrientes_ingeridos: NutrientesIngeridos
   activo: Boolean
 }
 

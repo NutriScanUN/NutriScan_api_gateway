@@ -92,13 +92,13 @@ export type CreateStoreInput = {
 };
 
 export type CreateUserInput = {
-  email: Scalars['String']['input'];
-  fecha_nacimiento: Scalars['String']['input'];
-  fecha_registro: Scalars['String']['input'];
-  nombres: Scalars['String']['input'];
-  rol: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  fecha_nacimiento?: InputMaybe<Scalars['String']['input']>;
+  fecha_registro?: InputMaybe<Scalars['String']['input']>;
+  nombres?: InputMaybe<Scalars['String']['input']>;
+  rol?: InputMaybe<Scalars['String']['input']>;
   uid: Scalars['String']['input'];
-  url_imagen: Scalars['String']['input'];
+  url_imagen?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateUserResponse = {
@@ -381,8 +381,8 @@ export type InfoProducto = {
 /** A response from user api */
 export type UserQuery = {
   __typename?: 'userQuery';
-  data?: Maybe<User>;
-  sucess: Scalars['Boolean']['output'];
+  data: User;
+  success: Scalars['Boolean']['output'];
 };
 
 
@@ -686,8 +686,8 @@ export type InfoProductoResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type UserQueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['userQuery'] = ResolversParentTypes['userQuery']> = {
-  data?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  sucess?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  data?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
