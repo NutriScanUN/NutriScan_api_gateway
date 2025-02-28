@@ -1,5 +1,5 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { CreateHistorialInput, Historial,Search,CreateSearchInput,UserDays } from "../types";
+import { CreateHistorialInput, Historial,Search,CreateSearchInput,UserDays, UserRecord } from "../types";
 
 export class HistorialAPI extends RESTDataSource {
   
@@ -29,5 +29,11 @@ export class HistorialAPI extends RESTDataSource {
       return this.post<any>("/api/search-history/"+search.uid+"/"+search.id, {
         body: search
       });
-  }
+    }
+    deleteHistorial(data:UserRecord): Promise<any> {
+      return this.delete<any>(`/api/consumption-history/${data.uid}/${data.recordId}`);
+    }
+    deleteSearch(data:UserRecord): Promise<any> {
+      return this.delete<any>(`/api/search-history/${data.uid}/${data.recordId}`);
+    }
 }

@@ -36,6 +36,7 @@ export class ListingAPI extends RESTDataSource {
     });
   }
   updateUser(user: CreateUserInput): Promise<any> {
+    console.log(user)
     return this.put<any>(`/api/users/${user.uid}`, {
       body: user
     });

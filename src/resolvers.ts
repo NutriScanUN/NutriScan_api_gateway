@@ -192,5 +192,41 @@ export const resolvers: Resolvers = {
         };
       }
     },
+    deleteHistorial: async (_, { data }, { dataSources }) => {
+      try {
+        const response = await dataSources.HistorialAPI.deleteHistorial(data);
+        return {
+          code: 200,
+          success: true,
+          message: "historial deleted!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
+    deleteSearch: async (_, { data }, { dataSources }) => {
+      try {
+        const response = await dataSources.HistorialAPI.deleteSearch(data);
+        return {
+          code: 200,
+          success: true,
+          message: "search deleted!",
+          listing: response
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${err.extensions.response.body}`,
+          listing: null
+        };
+      }
+    },
   }
 };
