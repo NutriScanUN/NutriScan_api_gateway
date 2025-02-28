@@ -36,6 +36,9 @@ export const resolvers: Resolvers = {
     getGetProductAndStore: (_, { id }, {dataSources}) => {
       return dataSources.storeAPI.getProductAndStore(id);
     },
+    getInfoOff: (_, { id }, {dataSources}) => {
+      return dataSources.storeAPI.getInfoOff(id);
+    },
   },
   Listing: {
     amenities: ({ id, amenities }, _, { dataSources }) => {

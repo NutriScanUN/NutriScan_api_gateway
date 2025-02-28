@@ -34,9 +34,12 @@ export class StoreAPI extends RESTDataSource {
     getProductAndStore(id: String): Promise<Product[]> {
       return this.get<Product[]>(`api/store/${id}/products`);
     }
+    getInfoOff(id: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/off/${id}`);
+    }
     createProduct(product: CreateProductInput): Promise<any> {
       return this.post<any>("/api/product", {
         body: product
       });
-  }
+    }
 }

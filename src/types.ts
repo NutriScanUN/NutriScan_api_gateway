@@ -226,6 +226,7 @@ export type Query = {
   getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
   getHistorials?: Maybe<Array<Maybe<Historial>>>;
   getHistorialsByDay?: Maybe<Array<Maybe<Historial>>>;
+  getInfoOff?: Maybe<Array<Maybe<Product>>>;
   getProduct?: Maybe<Product>;
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
   getProductByUser?: Maybe<Array<Maybe<Product>>>;
@@ -254,6 +255,11 @@ export type QueryGetHistorialsArgs = {
 export type QueryGetHistorialsByDayArgs = {
   days?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetInfoOffArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -577,6 +583,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
   getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
   getHistorialsByDay?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsByDayArgs, 'id'>>;
+  getInfoOff?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetInfoOffArgs>>;
   getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
   getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;

@@ -90,6 +90,7 @@ type Query {
   getStoreByUser(id:String):[Store]
   getProductByUser(id:String):[Product]
   getGetProductAndStore(id:String):[Store]
+  getInfoOff(id:String):[Product]
   getHistorialsByDay(id: ID!, days : Int): [Historial]
   getSearch(id:String):[Search]
 }
