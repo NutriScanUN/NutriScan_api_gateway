@@ -111,8 +111,8 @@ type Mutation {
   updateUser(input: CreateUserInput!): CreateUserResponse!
   createHistorial(input: CreateHistorialInput!): CreateUserResponse!
   createSearch(input: CreateSearchInput!): CreateUserResponse!
-  deleteHistorial(data: UserRecord): CreateUserResponse!
-  deleteSearch(data: UserRecord): CreateUserResponse!
+  deleteHistorial(id: ID): CreateUserResponse!
+  deleteSearch(id: ID): CreateUserResponse!
 }
 
 input CreateListingInput {

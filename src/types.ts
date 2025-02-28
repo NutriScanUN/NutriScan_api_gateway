@@ -187,12 +187,12 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteHistorialArgs = {
-  data?: InputMaybe<UserRecord>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
 export type MutationDeleteSearchArgs = {
-  data?: InputMaybe<UserRecord>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 

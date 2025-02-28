@@ -192,9 +192,9 @@ export const resolvers: Resolvers = {
         };
       }
     },
-    deleteHistorial: async (_, { data }, { dataSources }) => {
+    deleteHistorial: async (_, { id }, { dataSources }) => {
       try {
-        const response = await dataSources.HistorialAPI.deleteHistorial(data);
+        const response = await dataSources.historialAPI.deleteHistorial(id);
         return {
           code: 200,
           success: true,
@@ -210,9 +210,9 @@ export const resolvers: Resolvers = {
         };
       }
     },
-    deleteSearch: async (_, { data }, { dataSources }) => {
+    deleteSearch: async (_, { id }, { dataSources }) => {
       try {
-        const response = await dataSources.HistorialAPI.deleteSearch(data);
+        const response = await dataSources.historialAPI.deleteSearch(id);
         return {
           code: 200,
           success: true,
