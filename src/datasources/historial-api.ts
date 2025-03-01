@@ -26,7 +26,7 @@ export class HistorialAPI extends RESTDataSource {
       return this.get<Search[]>("api/search-history/"+userId+"/limit");
     }
     AddSearch(search: CreateSearchInput): Promise<any> {
-      return this.post<any>("/api/search-history/"+search.uid+"/"+search.id, {
+      return this.post<any>("/api/search-history/"+search.uid, {
         body: search
       });
     }

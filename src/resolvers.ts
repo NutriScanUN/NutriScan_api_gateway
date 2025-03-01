@@ -176,7 +176,7 @@ export const resolvers: Resolvers = {
     },
     createSearch: async (_, { input }, { dataSources }) => {
       try {
-        const response = await dataSources.historialAPI.createsearch(input);
+        const response = await dataSources.historialAPI.AddSearch(input);
         return {
           code: 200,
           success: true,

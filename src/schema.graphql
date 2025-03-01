@@ -27,10 +27,11 @@ type Store {
 
 type Historial {
   id: ID!
+  uid: String
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: NutrientesIngeridos
+  nutrientes_ingeridos: String
   activo: Boolean
 }
 
@@ -186,12 +187,11 @@ input CreateHistorialInput {
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: NutrientesIngeridosInput
+  nutrientes_ingeridos: String
   activo: Boolean
 }
 
 input CreateSearchInput {
-  id: ID!
   uid: String!
   fecha_busqueda: String
   id_producto: String
@@ -207,15 +207,6 @@ type CreateUserResponse {
   success: Boolean!
   "Human-readable message for the UI"
   message: String!
-}
-
-type Historial {
-  id: ID!
-  id_producto: String
-  fecha_consumo: String
-  cantidad_consumida: Int
-  nutrientes_ingeridos: NutrientesIngeridos
-  activo: Boolean
 }
 
 type Product {

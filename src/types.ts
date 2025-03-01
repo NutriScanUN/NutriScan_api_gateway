@@ -30,7 +30,7 @@ export type CreateHistorialInput = {
   cantidad_consumida?: InputMaybe<Scalars['Int']['input']>;
   fecha_consumo?: InputMaybe<Scalars['String']['input']>;
   id_producto?: InputMaybe<Scalars['String']['input']>;
-  nutrientes_ingeridos?: InputMaybe<NutrientesIngeridosInput>;
+  nutrientes_ingeridos?: InputMaybe<Scalars['String']['input']>;
   uid?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -74,7 +74,6 @@ export type CreateProductInput = {
 export type CreateSearchInput = {
   activo?: InputMaybe<Scalars['Boolean']['input']>;
   fecha_busqueda?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
   id_producto?: InputMaybe<Scalars['String']['input']>;
   id_tienda?: InputMaybe<Scalars['String']['input']>;
   redireccion_tienda?: InputMaybe<Scalars['Boolean']['input']>;
@@ -118,7 +117,8 @@ export type Historial = {
   fecha_consumo?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   id_producto?: Maybe<Scalars['String']['output']>;
-  nutrientes_ingeridos?: Maybe<NutrientesIngeridos>;
+  nutrientes_ingeridos?: Maybe<Scalars['String']['output']>;
+  uid?: Maybe<Scalars['String']['output']>;
 };
 
 /** A particular intergalactic location available for booking */
@@ -550,7 +550,8 @@ export type HistorialResolvers<ContextType = any, ParentType extends ResolversPa
   fecha_consumo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['NutrientesIngeridos']>, ParentType, ContextType>;
+  nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
