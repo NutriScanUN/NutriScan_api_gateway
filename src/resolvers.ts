@@ -15,8 +15,20 @@ export const resolvers: Resolvers = {
     getStores: (_, __, {dataSources}) => {
       return dataSources.storeAPI.getStores();
     },
-    getHistorials: (_, { id }, { dataSources }) => {
-      return dataSources.listingAPI.getHistorialQuery(id);
+    getAllHistorialConsumption: (_, { id }, { dataSources }) => {
+      return dataSources.historialAPI.getAllHistorialConsumption(id);
+    },
+    getHistorialConsumptionByDay: (_, { id , days }, { dataSources }) => {
+      return dataSources.historialAPI.getHistorialConsumptionByDay(id,days);
+    },
+    getHistorialSearchWithLimit: (_, { uid , limit }, { dataSources }) => {
+      return dataSources.historialAPI.getHistorialSearchWithLimit(uid,limit);
+    },
+    getAllHistorialSearch: (_, { uid }, { dataSources }) => {
+      return dataSources.historialAPI.getAllHistorialSearch(uid);
+    },
+    getHistorialSearchByDay: (_, { uid , days }, { dataSources }) => {
+      return dataSources.historialAPI.getHistorialSearchByDay(uid,days);
     },
     getProducts: (_, __, {dataSources}) => {
       return dataSources.storeAPI.getProducts();
@@ -38,6 +50,17 @@ export const resolvers: Resolvers = {
     },
     getInfoOff: (_, { id }, {dataSources}) => {
       return dataSources.storeAPI.getInfoOff(id);
+    },
+  },
+  HistorialData: {
+    __resolveType(obj) {
+      if ('fecha_consumo' in obj) {
+        return 'HistorialConsumption';
+      }
+      if ('fecha_busqueda' in obj) {
+        return 'HistorialSearch';
+      }
+      return null;
     },
   },
   Listing: {
@@ -156,76 +179,40 @@ export const resolvers: Resolvers = {
         };
       }
     },
-    createHistorial: async (_, { input }, { dataSources }) => {
+    addHistorialConsumption: async (_, { input }, { dataSources }) => {
       try {
-        const response = await dataSources.historialAPI.createHistorial(input);
-        return {
-          code: 200,
-          success: true,
-          message: "Historial successfully created!",
-          listing: response
-        };
-      } catch (err) {
-        return {
-          code: 500,
-          success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
-        };
+        const response = await dataSources.historialAPI.addHistorialConsumption(input);
+        return response;
+      } catch (error) {
+        console.error("Error fetching create consumption:", error);
+        throw new Error("Failed to fetch  create consumption");
       }
     },
-    createSearch: async (_, { input }, { dataSources }) => {
+    addHistorialSearch: async (_, { input }, { dataSources }) => {
       try {
-        const response = await dataSources.historialAPI.AddSearch(input);
-        return {
-          code: 200,
-          success: true,
-          message: "Search successfully created!",
-          listing: response
-        };
-      } catch (err) {
-        return {
-          code: 500,
-          success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
-        };
+        const response = await dataSources.historialAPI.addHistorialSearch(input);
+        return response;
+      } catch (error) {
+        console.error("Error fetching create search:", error);
+        throw new Error("Failed to fetch  create search");
       }
     },
-    deleteHistorial: async (_, { id }, { dataSources }) => {
+    deleteHistorialConsumption: async (_, { uid,recordId }, { dataSources }) => {
       try {
-        const response = await dataSources.historialAPI.deleteHistorial(id);
-        return {
-          code: 200,
-          success: true,
-          message: "historial deleted!",
-          listing: response
-        };
-      } catch (err) {
-        return {
-          code: 500,
-          success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
-        };
+        const response = await dataSources.historialAPI.deleteHistorialConsumption(uid,recordId);
+        return response;
+      } catch (error) {
+        console.error("Error fetching delete consumption:", error);
+        throw new Error("Failed to fetch  delete consumption");
       }
     },
-    deleteSearch: async (_, { id }, { dataSources }) => {
+    deleteHistorialSearch: async (_, { uid,recordId }, { dataSources }) => {
       try {
-        const response = await dataSources.historialAPI.deleteSearch(id);
-        return {
-          code: 200,
-          success: true,
-          message: "search deleted!",
-          listing: response
-        };
-      } catch (err) {
-        return {
-          code: 500,
-          success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
-        };
+        const response = await dataSources.historialAPI.deleteHistorialSearch(uid,recordId);
+        return response;
+      } catch (error) {
+        console.error("Error fetching delete search:", error);
+        throw new Error("Failed to fetch  delete search");
       }
     },
   }

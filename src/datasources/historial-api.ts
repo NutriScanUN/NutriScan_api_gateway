@@ -1,39 +1,43 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { CreateHistorialInput, Historial,Search,CreateSearchInput,UserDays, UserRecord } from "../types";
+import { CreateHistorialInput, Search, CreateSearchInput, UserDays, UserRecord, HistorialResponse, DeleteHistorialResponse } from "../types";
 
 export class HistorialAPI extends RESTDataSource {
   
   baseURL = "http://historial-ms:3006/";
 
-    getHistorial(userId :String): Promise<Historial[]> {
-      return this.get<Historial[]>("api/consumption-history/"+userId+"/all");
+    async getAllHistorialConsumption(userId :String): Promise<HistorialResponse> {
+      return await this.get<HistorialResponse>("api/consumption-history/"+userId+"/all");
     }
-    getHistorialByDay(data: UserDays): Promise<Historial[]> {
-      return this.get<Historial[]>("api/consumption-history/"+data.uid+"/"+data.days);
+    getHistorialConsumptionByDay(uid: string, days: number): Promise<HistorialResponse> {
+      return this.get<HistorialResponse>(`api/consumption-history/${uid}/${days ?? 1}`);
     }
-    createHistorial(historial: CreateHistorialInput): Promise<any> {
-            return this.post<any>("/api/consumption-history/"+historial.uid, {
-              body: historial
-            });
-        }
-    getSearch(userId :String): Promise<Search[]> {
-      return this.get<Search[]>("api/search-history/"+userId);
+    addHistorialConsumption(historial: CreateHistorialInput): Promise<any> {
+      return this.post<any>("/api/consumption-history/"+historial.uid, {
+        body: historial
+      });
     }
-    getSearchByDay(data: UserDays): Promise<Search[]> {
-      return this.get<Search[]>("api/search-history/"+data.uid+"/"+data.days);
+    getHistorialSearchWithLimit(uid:string,limit:number): Promise<HistorialResponse> {
+      return this.get<HistorialResponse>(`api/search-history/${uid}/limit`, {
+        params: { limit: String(limit) }
+      });
     }
-    getSearchlimit(userId :String): Promise<Search[]> {
-      return this.get<Search[]>("api/search-history/"+userId+"/limit");
+    getHistorialSearchByDay(uid:string, days:number): Promise<Search[]> {
+      console.log("🚀 ~ HistorialAPI ~ getHistorialSearchByDay ~ api/search-history", "api/search-history/"+uid+"/"+days)
+      return this.get<Search[]>(`api/search-history/${uid}/${days}`);
     }
-    AddSearch(search: CreateSearchInput): Promise<any> {
+    getAllHistorialSearch(userId :String): Promise<Search[]> {
+      console.log("🚀 ~ HistorialAPI ~ getAllHistorialSearch ~ api/search-history/", "api/search-history/"+userId)
+      return this.get<Search[]>(`api/search-history/${userId}`);
+    }
+    addHistorialSearch(search: CreateSearchInput): Promise<any> {
       return this.post<any>("/api/search-history/"+search.uid, {
         body: search
       });
     }
-    deleteHistorial(data:UserRecord): Promise<any> {
-      return this.delete<any>(`/api/consumption-history/${data.uid}/${data.recordId}`);
+    deleteHistorialConsumption(uid:string,recordId:string): Promise<DeleteHistorialResponse> {
+      return this.delete<DeleteHistorialResponse>(`/api/consumption-history/${uid}/${recordId}`);
     }
-    deleteSearch(data:UserRecord): Promise<any> {
-      return this.delete<any>(`/api/search-history/${data.uid}/${data.recordId}`);
+    deleteHistorialSearch(uid:string,recordId:string): Promise<DeleteHistorialResponse> {
+      return this.delete<DeleteHistorialResponse>(`/api/search-history/${uid}/${recordId}`);
     }
 }

@@ -25,13 +25,62 @@ type Store {
   fotos: String
 }
 
-type Historial {
+type DeleteHistorialResponse {
+  success: Boolean!
+  data: DeleteMiddleHistorialResponse
+}
+
+type DeleteMiddleHistorialResponse{ 
+  success: Boolean,
+  message : String,
+  data: DeleteMiddleLowHistorialResponse
+}
+
+type DeleteMiddleLowHistorialResponse{
+  success: Boolean,
+  message : String
+}
+
+type CreateHistorialResponse {
+  success: Boolean!
+  data: CreateMiddleHistorialResponse
+}
+
+type CreateMiddleHistorialResponse{ 
+  success: Boolean,
+  message : String,
+  id: String
+}
+
+type HistorialResponse {
+  success: Boolean!
+  data: HistorialMiddleResponse
+}
+
+union HistorialData = HistorialConsumption | HistorialSearch
+
+type HistorialMiddleResponse {
+  success: Boolean!
+  data: [HistorialData]
+}
+
+type HistorialConsumption {
   id: ID!
   uid: String
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
   nutrientes_ingeridos: String
+  activo: Boolean
+}
+
+type HistorialSearch {
+  id: ID!
+  uid: String
+  id_producto: String
+  fecha_busqueda: String
+  id_tienda: String,
+  redireccion_tienda: Boolean,
   activo: Boolean
 }
 
@@ -89,7 +138,6 @@ type Query {
   userQuery(id: ID!): userQuery
   "Returns list of all stores"
   getStores: [Store]
-  getHistorials(id: ID!): [Historial]
   getProducts: [Product]!
   getProduct(id: ID!): Product
   getProductByStore(storeId: Int): [Product]
@@ -97,8 +145,11 @@ type Query {
   getProductByUser(id:String):[Product]
   getGetProductAndStore(id:String):[Store]
   getInfoOff(id:String):ProductoOff
-  getHistorialsByDay(id: ID!, days : Int): [Historial]
-  getSearch(id:String):[Search]
+  getHistorialSearchWithLimit(uid:String, limit: Int): HistorialResponse
+  getAllHistorialSearch(uid:String): HistorialResponse
+  getHistorialSearchByDay(uid:String, days: Int): HistorialResponse
+  getAllHistorialConsumption(id: ID!): HistorialResponse
+  getHistorialConsumptionByDay(id: ID!, days : Int): HistorialResponse
 }
 
 type Mutation {
@@ -110,10 +161,10 @@ type Mutation {
   deleteStore(id: ID!): CreateUserResponse!
   createProduct(input: CreateProductInput!): CreateUserResponse!
   updateUser(input: CreateUserInput!): CreateUserResponse!
-  createHistorial(input: CreateHistorialInput!): CreateUserResponse!
-  createSearch(input: CreateSearchInput!): CreateUserResponse!
-  deleteHistorial(id: ID): CreateUserResponse!
-  deleteSearch(id: ID): CreateUserResponse!
+  addHistorialSearch(input: CreateSearchInput!): CreateHistorialResponse!
+  addHistorialConsumption(input: CreateHistorialInput!): CreateHistorialResponse!
+  deleteHistorialConsumption(uid: ID, recordId: ID): DeleteHistorialResponse!
+  deleteHistorialSearch(uid: ID, recordId: ID): DeleteHistorialResponse!
 }
 
 input CreateListingInput {

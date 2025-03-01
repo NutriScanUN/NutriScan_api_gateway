@@ -6,6 +6,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -34,6 +35,12 @@ export type CreateHistorialInput = {
   uid?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateHistorialResponse = {
+  __typename?: 'CreateHistorialResponse';
+  data?: Maybe<CreateMiddleHistorialResponse>;
+  success: Scalars['Boolean']['output'];
+};
+
 export type CreateListingInput = {
   /** The Listing's amenities */
   amenities: Array<Scalars['ID']['input']>;
@@ -59,6 +66,13 @@ export type CreateListingResponse = {
   message: Scalars['String']['output'];
   /** Indicates whether the mutation was successful */
   success: Scalars['Boolean']['output'];
+};
+
+export type CreateMiddleHistorialResponse = {
+  __typename?: 'CreateMiddleHistorialResponse';
+  id?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type CreateProductInput = {
@@ -110,14 +124,58 @@ export type CreateUserResponse = {
   success: Scalars['Boolean']['output'];
 };
 
-export type Historial = {
-  __typename?: 'Historial';
+export type DeleteHistorialResponse = {
+  __typename?: 'DeleteHistorialResponse';
+  data?: Maybe<DeleteMiddleHistorialResponse>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type DeleteMiddleHistorialResponse = {
+  __typename?: 'DeleteMiddleHistorialResponse';
+  data?: Maybe<DeleteMiddleLowHistorialResponse>;
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type DeleteMiddleLowHistorialResponse = {
+  __typename?: 'DeleteMiddleLowHistorialResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type HistorialConsumption = {
+  __typename?: 'HistorialConsumption';
   activo?: Maybe<Scalars['Boolean']['output']>;
   cantidad_consumida?: Maybe<Scalars['Int']['output']>;
   fecha_consumo?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   id_producto?: Maybe<Scalars['String']['output']>;
   nutrientes_ingeridos?: Maybe<Scalars['String']['output']>;
+  uid?: Maybe<Scalars['String']['output']>;
+};
+
+export type HistorialData = HistorialConsumption | HistorialSearch;
+
+export type HistorialMiddleResponse = {
+  __typename?: 'HistorialMiddleResponse';
+  data?: Maybe<Array<Maybe<HistorialData>>>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type HistorialResponse = {
+  __typename?: 'HistorialResponse';
+  data?: Maybe<HistorialMiddleResponse>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type HistorialSearch = {
+  __typename?: 'HistorialSearch';
+  activo?: Maybe<Scalars['Boolean']['output']>;
+  fecha_busqueda?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  id_producto?: Maybe<Scalars['String']['output']>;
+  id_tienda?: Maybe<Scalars['String']['output']>;
+  redireccion_tienda?: Maybe<Scalars['Boolean']['output']>;
   uid?: Maybe<Scalars['String']['output']>;
 };
 
@@ -141,23 +199,28 @@ export type Listing = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createHistorial: CreateUserResponse;
+  addHistorialConsumption: CreateHistorialResponse;
+  addHistorialSearch: CreateHistorialResponse;
   /** Creates a new listing */
   createListing: CreateListingResponse;
   createProduct: CreateUserResponse;
-  createSearch: CreateUserResponse;
   createStore: CreateUserResponse;
   /** creates a user */
   createUser: CreateUserResponse;
-  deleteHistorial: CreateUserResponse;
-  deleteSearch: CreateUserResponse;
+  deleteHistorialConsumption: DeleteHistorialResponse;
+  deleteHistorialSearch: DeleteHistorialResponse;
   deleteStore: CreateUserResponse;
   updateUser: CreateUserResponse;
 };
 
 
-export type MutationCreateHistorialArgs = {
+export type MutationAddHistorialConsumptionArgs = {
   input: CreateHistorialInput;
+};
+
+
+export type MutationAddHistorialSearchArgs = {
+  input: CreateSearchInput;
 };
 
 
@@ -171,11 +234,6 @@ export type MutationCreateProductArgs = {
 };
 
 
-export type MutationCreateSearchArgs = {
-  input: CreateSearchInput;
-};
-
-
 export type MutationCreateStoreArgs = {
   input: CreateStoreInput;
 };
@@ -186,13 +244,15 @@ export type MutationCreateUserArgs = {
 };
 
 
-export type MutationDeleteHistorialArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
+export type MutationDeleteHistorialConsumptionArgs = {
+  recordId?: InputMaybe<Scalars['ID']['input']>;
+  uid?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
-export type MutationDeleteSearchArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
+export type MutationDeleteHistorialSearchArgs = {
+  recordId?: InputMaybe<Scalars['ID']['input']>;
+  uid?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -246,15 +306,17 @@ export type Query = {
   __typename?: 'Query';
   /** A curated array of listings to feature on the homepage */
   featuredListings: Array<Listing>;
+  getAllHistorialConsumption?: Maybe<HistorialResponse>;
+  getAllHistorialSearch?: Maybe<HistorialResponse>;
   getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
-  getHistorials?: Maybe<Array<Maybe<Historial>>>;
-  getHistorialsByDay?: Maybe<Array<Maybe<Historial>>>;
+  getHistorialConsumptionByDay?: Maybe<HistorialResponse>;
+  getHistorialSearchByDay?: Maybe<HistorialResponse>;
+  getHistorialSearchWithLimit?: Maybe<HistorialResponse>;
   getInfoOff?: Maybe<ProductoOff>;
   getProduct?: Maybe<Product>;
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
   getProductByUser?: Maybe<Array<Maybe<Product>>>;
   getProducts: Array<Maybe<Product>>;
-  getSearch?: Maybe<Array<Maybe<Search>>>;
   getStoreByUser?: Maybe<Array<Maybe<Store>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
@@ -265,19 +327,36 @@ export type Query = {
 };
 
 
+export type QueryGetAllHistorialConsumptionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetAllHistorialSearchArgs = {
+  uid?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetGetProductAndStoreArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryGetHistorialsArgs = {
+export type QueryGetHistorialConsumptionByDayArgs = {
+  days?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['ID']['input'];
 };
 
 
-export type QueryGetHistorialsByDayArgs = {
+export type QueryGetHistorialSearchByDayArgs = {
   days?: InputMaybe<Scalars['Int']['input']>;
-  id: Scalars['ID']['input'];
+  uid?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetHistorialSearchWithLimitArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  uid?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -297,11 +376,6 @@ export type QueryGetProductByStoreArgs = {
 
 
 export type QueryGetProductByUserArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryGetSearchArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -463,6 +537,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+/** Mapping of union types */
+export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
+  HistorialData: ( HistorialConsumption ) | ( HistorialSearch );
+};
 
 
 /** Mapping between all available schema types and the resolvers types */
@@ -470,15 +548,24 @@ export type ResolversTypes = {
   Amenity: ResolverTypeWrapper<Amenity>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateHistorialInput: CreateHistorialInput;
+  CreateHistorialResponse: ResolverTypeWrapper<CreateHistorialResponse>;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
+  CreateMiddleHistorialResponse: ResolverTypeWrapper<CreateMiddleHistorialResponse>;
   CreateProductInput: CreateProductInput;
   CreateSearchInput: CreateSearchInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
+  DeleteHistorialResponse: ResolverTypeWrapper<DeleteHistorialResponse>;
+  DeleteMiddleHistorialResponse: ResolverTypeWrapper<DeleteMiddleHistorialResponse>;
+  DeleteMiddleLowHistorialResponse: ResolverTypeWrapper<DeleteMiddleLowHistorialResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
-  Historial: ResolverTypeWrapper<Historial>;
+  HistorialConsumption: ResolverTypeWrapper<HistorialConsumption>;
+  HistorialData: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['HistorialData']>;
+  HistorialMiddleResponse: ResolverTypeWrapper<Omit<HistorialMiddleResponse, 'data'> & { data?: Maybe<Array<Maybe<ResolversTypes['HistorialData']>>> }>;
+  HistorialResponse: ResolverTypeWrapper<Omit<HistorialResponse, 'data'> & { data?: Maybe<ResolversTypes['HistorialMiddleResponse']> }>;
+  HistorialSearch: ResolverTypeWrapper<HistorialSearch>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Listing: ResolverTypeWrapper<Listing>;
@@ -504,15 +591,24 @@ export type ResolversParentTypes = {
   Amenity: Amenity;
   Boolean: Scalars['Boolean']['output'];
   CreateHistorialInput: CreateHistorialInput;
+  CreateHistorialResponse: CreateHistorialResponse;
   CreateListingInput: CreateListingInput;
   CreateListingResponse: CreateListingResponse;
+  CreateMiddleHistorialResponse: CreateMiddleHistorialResponse;
   CreateProductInput: CreateProductInput;
   CreateSearchInput: CreateSearchInput;
   CreateStoreInput: CreateStoreInput;
   CreateUserInput: CreateUserInput;
   CreateUserResponse: CreateUserResponse;
+  DeleteHistorialResponse: DeleteHistorialResponse;
+  DeleteMiddleHistorialResponse: DeleteMiddleHistorialResponse;
+  DeleteMiddleLowHistorialResponse: DeleteMiddleLowHistorialResponse;
   Float: Scalars['Float']['output'];
-  Historial: Historial;
+  HistorialConsumption: HistorialConsumption;
+  HistorialData: ResolversUnionTypes<ResolversParentTypes>['HistorialData'];
+  HistorialMiddleResponse: Omit<HistorialMiddleResponse, 'data'> & { data?: Maybe<Array<Maybe<ResolversParentTypes['HistorialData']>>> };
+  HistorialResponse: Omit<HistorialResponse, 'data'> & { data?: Maybe<ResolversParentTypes['HistorialMiddleResponse']> };
+  HistorialSearch: HistorialSearch;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Listing: Listing;
@@ -540,11 +636,24 @@ export type AmenityResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CreateHistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateHistorialResponse'] = ResolversParentTypes['CreateHistorialResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['CreateMiddleHistorialResponse']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CreateListingResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateListingResponse'] = ResolversParentTypes['CreateListingResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CreateMiddleHistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateMiddleHistorialResponse'] = ResolversParentTypes['CreateMiddleHistorialResponse']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -555,13 +664,59 @@ export type CreateUserResponseResolvers<ContextType = any, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type HistorialResolvers<ContextType = any, ParentType extends ResolversParentTypes['Historial'] = ResolversParentTypes['Historial']> = {
+export type DeleteHistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteHistorialResponse'] = ResolversParentTypes['DeleteHistorialResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['DeleteMiddleHistorialResponse']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteMiddleHistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteMiddleHistorialResponse'] = ResolversParentTypes['DeleteMiddleHistorialResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['DeleteMiddleLowHistorialResponse']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteMiddleLowHistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteMiddleLowHistorialResponse'] = ResolversParentTypes['DeleteMiddleLowHistorialResponse']> = {
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HistorialConsumptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['HistorialConsumption'] = ResolversParentTypes['HistorialConsumption']> = {
   activo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   cantidad_consumida?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   fecha_consumo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HistorialDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['HistorialData'] = ResolversParentTypes['HistorialData']> = {
+  __resolveType: TypeResolveFn<'HistorialConsumption' | 'HistorialSearch', ParentType, ContextType>;
+};
+
+export type HistorialMiddleResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['HistorialMiddleResponse'] = ResolversParentTypes['HistorialMiddleResponse']> = {
+  data?: Resolver<Maybe<Array<Maybe<ResolversTypes['HistorialData']>>>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HistorialResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['HistorialResponse'] = ResolversParentTypes['HistorialResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['HistorialMiddleResponse']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HistorialSearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['HistorialSearch'] = ResolversParentTypes['HistorialSearch']> = {
+  activo?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  fecha_busqueda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_tienda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  redireccion_tienda?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -578,14 +733,14 @@ export type ListingResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createHistorial?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateHistorialArgs, 'input'>>;
+  addHistorialConsumption?: Resolver<ResolversTypes['CreateHistorialResponse'], ParentType, ContextType, RequireFields<MutationAddHistorialConsumptionArgs, 'input'>>;
+  addHistorialSearch?: Resolver<ResolversTypes['CreateHistorialResponse'], ParentType, ContextType, RequireFields<MutationAddHistorialSearchArgs, 'input'>>;
   createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
   createProduct?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
-  createSearch?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateSearchArgs, 'input'>>;
   createStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'input'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  deleteHistorial?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, Partial<MutationDeleteHistorialArgs>>;
-  deleteSearch?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, Partial<MutationDeleteSearchArgs>>;
+  deleteHistorialConsumption?: Resolver<ResolversTypes['DeleteHistorialResponse'], ParentType, ContextType, Partial<MutationDeleteHistorialConsumptionArgs>>;
+  deleteHistorialSearch?: Resolver<ResolversTypes['DeleteHistorialResponse'], ParentType, ContextType, Partial<MutationDeleteHistorialSearchArgs>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
   updateUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
 };
@@ -624,15 +779,17 @@ export type ProductoOffResolvers<ContextType = any, ParentType extends Resolvers
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  getAllHistorialConsumption?: Resolver<Maybe<ResolversTypes['HistorialResponse']>, ParentType, ContextType, RequireFields<QueryGetAllHistorialConsumptionArgs, 'id'>>;
+  getAllHistorialSearch?: Resolver<Maybe<ResolversTypes['HistorialResponse']>, ParentType, ContextType, Partial<QueryGetAllHistorialSearchArgs>>;
   getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
-  getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
-  getHistorialsByDay?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsByDayArgs, 'id'>>;
+  getHistorialConsumptionByDay?: Resolver<Maybe<ResolversTypes['HistorialResponse']>, ParentType, ContextType, RequireFields<QueryGetHistorialConsumptionByDayArgs, 'id'>>;
+  getHistorialSearchByDay?: Resolver<Maybe<ResolversTypes['HistorialResponse']>, ParentType, ContextType, Partial<QueryGetHistorialSearchByDayArgs>>;
+  getHistorialSearchWithLimit?: Resolver<Maybe<ResolversTypes['HistorialResponse']>, ParentType, ContextType, Partial<QueryGetHistorialSearchWithLimitArgs>>;
   getInfoOff?: Resolver<Maybe<ResolversTypes['ProductoOff']>, ParentType, ContextType, Partial<QueryGetInfoOffArgs>>;
   getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
   getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
   getProducts?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
-  getSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['Search']>>>, ParentType, ContextType, Partial<QueryGetSearchArgs>>;
   getStoreByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetStoreByUserArgs>>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
@@ -715,9 +872,18 @@ export type UserQueryResolvers<ContextType = any, ParentType extends ResolversPa
 
 export type Resolvers<ContextType = any> = {
   Amenity?: AmenityResolvers<ContextType>;
+  CreateHistorialResponse?: CreateHistorialResponseResolvers<ContextType>;
   CreateListingResponse?: CreateListingResponseResolvers<ContextType>;
+  CreateMiddleHistorialResponse?: CreateMiddleHistorialResponseResolvers<ContextType>;
   CreateUserResponse?: CreateUserResponseResolvers<ContextType>;
-  Historial?: HistorialResolvers<ContextType>;
+  DeleteHistorialResponse?: DeleteHistorialResponseResolvers<ContextType>;
+  DeleteMiddleHistorialResponse?: DeleteMiddleHistorialResponseResolvers<ContextType>;
+  DeleteMiddleLowHistorialResponse?: DeleteMiddleLowHistorialResponseResolvers<ContextType>;
+  HistorialConsumption?: HistorialConsumptionResolvers<ContextType>;
+  HistorialData?: HistorialDataResolvers<ContextType>;
+  HistorialMiddleResponse?: HistorialMiddleResponseResolvers<ContextType>;
+  HistorialResponse?: HistorialResponseResolvers<ContextType>;
+  HistorialSearch?: HistorialSearchResolvers<ContextType>;
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   NutrientesIngeridos?: NutrientesIngeridosResolvers<ContextType>;
