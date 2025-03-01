@@ -219,6 +219,14 @@ type Product {
   updated_at:String
 }
 
+type ProductData {
+  referencia: String!
+  nombre: String
+  foto:  String
+  categorias: [String]
+  nutriscore: String
+}
+
 type infoProducto {
   carbohidratos: Float
   unidadCarbohidratos: String
@@ -243,6 +251,6 @@ type infoProducto {
 }
 
 type ProductoOff{
-  producto: Product
+  producto: ProductData
   infoProducto: infoProducto
 }

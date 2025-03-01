@@ -227,10 +227,19 @@ export type Product = {
   url_imagen?: Maybe<Scalars['String']['output']>;
 };
 
+export type ProductData = {
+  __typename?: 'ProductData';
+  categorias?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  foto?: Maybe<Scalars['String']['output']>;
+  nombre?: Maybe<Scalars['String']['output']>;
+  nutriscore?: Maybe<Scalars['String']['output']>;
+  referencia: Scalars['String']['output'];
+};
+
 export type ProductoOff = {
   __typename?: 'ProductoOff';
   infoProducto?: Maybe<InfoProducto>;
-  producto?: Maybe<Product>;
+  producto?: Maybe<ProductData>;
 };
 
 export type Query = {
@@ -477,6 +486,7 @@ export type ResolversTypes = {
   NutrientesIngeridos: ResolverTypeWrapper<NutrientesIngeridos>;
   NutrientesIngeridosInput: NutrientesIngeridosInput;
   Product: ResolverTypeWrapper<Product>;
+  ProductData: ResolverTypeWrapper<ProductData>;
   ProductoOff: ResolverTypeWrapper<ProductoOff>;
   Query: ResolverTypeWrapper<{}>;
   Search: ResolverTypeWrapper<Search>;
@@ -510,6 +520,7 @@ export type ResolversParentTypes = {
   NutrientesIngeridos: NutrientesIngeridos;
   NutrientesIngeridosInput: NutrientesIngeridosInput;
   Product: Product;
+  ProductData: ProductData;
   ProductoOff: ProductoOff;
   Query: {};
   Search: Search;
@@ -596,9 +607,18 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProductDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductData'] = ResolversParentTypes['ProductData']> = {
+  categorias?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  foto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nutriscore?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  referencia?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProductoOffResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductoOff'] = ResolversParentTypes['ProductoOff']> = {
   infoProducto?: Resolver<Maybe<ResolversTypes['infoProducto']>, ParentType, ContextType>;
-  producto?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType>;
+  producto?: Resolver<Maybe<ResolversTypes['ProductData']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -702,6 +722,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   NutrientesIngeridos?: NutrientesIngeridosResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
+  ProductData?: ProductDataResolvers<ContextType>;
   ProductoOff?: ProductoOffResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Search?: SearchResolvers<ContextType>;
