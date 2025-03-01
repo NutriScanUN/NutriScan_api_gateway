@@ -173,7 +173,12 @@ input CreateProductInput {
 
 type NutrientesIngeridos {
   carbohidaratos: Int
-  liquido: int
+  liquido: Int
+}
+
+input NutrientesIngeridosInput {
+  carbohidaratos: Int
+  liquido: Int
 }
 
 input CreateHistorialInput {
@@ -181,7 +186,7 @@ input CreateHistorialInput {
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: NutrientesIngeridos
+  nutrientes_ingeridos: NutrientesIngeridosInput
   activo: Boolean
 }
 

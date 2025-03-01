@@ -30,7 +30,7 @@ export type CreateHistorialInput = {
   cantidad_consumida?: InputMaybe<Scalars['Int']['input']>;
   fecha_consumo?: InputMaybe<Scalars['String']['input']>;
   id_producto?: InputMaybe<Scalars['String']['input']>;
-  nutrientes_ingeridos?: InputMaybe<Scalars['String']['input']>;
+  nutrientes_ingeridos?: InputMaybe<NutrientesIngeridosInput>;
   uid?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -118,7 +118,7 @@ export type Historial = {
   fecha_consumo?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   id_producto?: Maybe<Scalars['String']['output']>;
-  nutrientes_ingeridos?: Maybe<Scalars['String']['output']>;
+  nutrientes_ingeridos?: Maybe<NutrientesIngeridos>;
 };
 
 /** A particular intergalactic location available for booking */
@@ -203,6 +203,17 @@ export type MutationDeleteStoreArgs = {
 
 export type MutationUpdateUserArgs = {
   input: CreateUserInput;
+};
+
+export type NutrientesIngeridos = {
+  __typename?: 'NutrientesIngeridos';
+  carbohidaratos?: Maybe<Scalars['Int']['output']>;
+  liquido?: Maybe<Scalars['Int']['output']>;
+};
+
+export type NutrientesIngeridosInput = {
+  carbohidaratos?: InputMaybe<Scalars['Int']['input']>;
+  liquido?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Off = {
@@ -472,6 +483,8 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Listing: ResolverTypeWrapper<Listing>;
   Mutation: ResolverTypeWrapper<{}>;
+  NutrientesIngeridos: ResolverTypeWrapper<NutrientesIngeridos>;
+  NutrientesIngeridosInput: NutrientesIngeridosInput;
   Off: ResolverTypeWrapper<Off>;
   Product: ResolverTypeWrapper<Product>;
   ProductoOff: ResolverTypeWrapper<ProductoOff>;
@@ -504,6 +517,8 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   Listing: Listing;
   Mutation: {};
+  NutrientesIngeridos: NutrientesIngeridos;
+  NutrientesIngeridosInput: NutrientesIngeridosInput;
   Off: Off;
   Product: Product;
   ProductoOff: ProductoOff;
@@ -546,7 +561,7 @@ export type HistorialResolvers<ContextType = any, ParentType extends ResolversPa
   fecha_consumo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   id_producto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nutrientes_ingeridos?: Resolver<Maybe<ResolversTypes['NutrientesIngeridos']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -572,6 +587,12 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteSearch?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, Partial<MutationDeleteSearchArgs>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
   updateUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
+};
+
+export type NutrientesIngeridosResolvers<ContextType = any, ParentType extends ResolversParentTypes['NutrientesIngeridos'] = ResolversParentTypes['NutrientesIngeridos']> = {
+  carbohidaratos?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  liquido?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type OffResolvers<ContextType = any, ParentType extends ResolversParentTypes['Off'] = ResolversParentTypes['Off']> = {
@@ -698,6 +719,7 @@ export type Resolvers<ContextType = any> = {
   Historial?: HistorialResolvers<ContextType>;
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NutrientesIngeridos?: NutrientesIngeridosResolvers<ContextType>;
   Off?: OffResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   ProductoOff?: ProductoOffResolvers<ContextType>;
