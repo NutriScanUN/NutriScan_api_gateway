@@ -95,7 +95,7 @@ type Query {
   getStoreByUser(id:String):[Store]
   getProductByUser(id:String):[Product]
   getGetProductAndStore(id:String):[Store]
-  getInfoOff(id:String):[Product]
+  getInfoOff(id:String):ProductoOff
   getHistorialsByDay(id: ID!, days : Int): [Historial]
   getSearch(id:String):[Search]
 }
@@ -218,14 +218,6 @@ type Historial {
   activo: Boolean
 }
 
-type ProductoOff {
-  referencia: String
-  nombre: String
-  foto: String
-  categorias: [String]
-  nutriscore: String
-}
-
 type Product {
   id_producto:ID
   referencia: String
@@ -259,7 +251,7 @@ type infoProducto {
   nivelesAltos: [String]
 }
 
-type Off{
-  productoOff: [ProductoOff]
-  infoProducto: [infoProducto]
+type ProductoOff{
+  producto: Product
+  infoProducto: infoProducto
 }

@@ -216,12 +216,6 @@ export type NutrientesIngeridosInput = {
   liquido?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Off = {
-  __typename?: 'Off';
-  infoProducto?: Maybe<Array<Maybe<InfoProducto>>>;
-  productoOff?: Maybe<Array<Maybe<ProductoOff>>>;
-};
-
 export type Product = {
   __typename?: 'Product';
   created_at?: Maybe<Scalars['String']['output']>;
@@ -235,11 +229,8 @@ export type Product = {
 
 export type ProductoOff = {
   __typename?: 'ProductoOff';
-  categorias?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  foto?: Maybe<Scalars['String']['output']>;
-  nombre?: Maybe<Scalars['String']['output']>;
-  nutriscore?: Maybe<Scalars['String']['output']>;
-  referencia?: Maybe<Scalars['String']['output']>;
+  infoProducto?: Maybe<InfoProducto>;
+  producto?: Maybe<Product>;
 };
 
 export type Query = {
@@ -249,7 +240,7 @@ export type Query = {
   getGetProductAndStore?: Maybe<Array<Maybe<Store>>>;
   getHistorials?: Maybe<Array<Maybe<Historial>>>;
   getHistorialsByDay?: Maybe<Array<Maybe<Historial>>>;
-  getInfoOff?: Maybe<Array<Maybe<Product>>>;
+  getInfoOff?: Maybe<ProductoOff>;
   getProduct?: Maybe<Product>;
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
   getProductByUser?: Maybe<Array<Maybe<Product>>>;
@@ -485,7 +476,6 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   NutrientesIngeridos: ResolverTypeWrapper<NutrientesIngeridos>;
   NutrientesIngeridosInput: NutrientesIngeridosInput;
-  Off: ResolverTypeWrapper<Off>;
   Product: ResolverTypeWrapper<Product>;
   ProductoOff: ResolverTypeWrapper<ProductoOff>;
   Query: ResolverTypeWrapper<{}>;
@@ -519,7 +509,6 @@ export type ResolversParentTypes = {
   Mutation: {};
   NutrientesIngeridos: NutrientesIngeridos;
   NutrientesIngeridosInput: NutrientesIngeridosInput;
-  Off: Off;
   Product: Product;
   ProductoOff: ProductoOff;
   Query: {};
@@ -595,12 +584,6 @@ export type NutrientesIngeridosResolvers<ContextType = any, ParentType extends R
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type OffResolvers<ContextType = any, ParentType extends ResolversParentTypes['Off'] = ResolversParentTypes['Off']> = {
-  infoProducto?: Resolver<Maybe<Array<Maybe<ResolversTypes['infoProducto']>>>, ParentType, ContextType>;
-  productoOff?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProductoOff']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   created_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   descripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -613,11 +596,8 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type ProductoOffResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductoOff'] = ResolversParentTypes['ProductoOff']> = {
-  categorias?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
-  foto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  nutriscore?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  referencia?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  infoProducto?: Resolver<Maybe<ResolversTypes['infoProducto']>, ParentType, ContextType>;
+  producto?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -626,7 +606,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getGetProductAndStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetGetProductAndStoreArgs>>;
   getHistorials?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsArgs, 'id'>>;
   getHistorialsByDay?: Resolver<Maybe<Array<Maybe<ResolversTypes['Historial']>>>, ParentType, ContextType, RequireFields<QueryGetHistorialsByDayArgs, 'id'>>;
-  getInfoOff?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetInfoOffArgs>>;
+  getInfoOff?: Resolver<Maybe<ResolversTypes['ProductoOff']>, ParentType, ContextType, Partial<QueryGetInfoOffArgs>>;
   getProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryGetProductArgs, 'id'>>;
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
   getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
@@ -720,7 +700,6 @@ export type Resolvers<ContextType = any> = {
   Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   NutrientesIngeridos?: NutrientesIngeridosResolvers<ContextType>;
-  Off?: OffResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   ProductoOff?: ProductoOffResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
