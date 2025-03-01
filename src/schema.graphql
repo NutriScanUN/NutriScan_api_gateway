@@ -209,7 +209,7 @@ type Historial {
   id_producto: String
   fecha_consumo: String
   cantidad_consumida: Int
-  nutrientes_ingeridos: String
+  nutrientes_ingeridos: NutrientesIngeridos
   activo: Boolean
 }
 
