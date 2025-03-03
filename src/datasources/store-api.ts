@@ -18,7 +18,7 @@ export class StoreAPI extends RESTDataSource {
         body: store
       });
     }
-    deleteStore(storeId: String): Promise<any> {
+    deleteStore(storeId: number): Promise<any> {
         return this.delete<any>(`/api/store/${storeId}`);
       }
     getProducts(): Promise<Product[]> {

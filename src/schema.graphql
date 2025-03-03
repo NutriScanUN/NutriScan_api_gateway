@@ -161,7 +161,7 @@ type Mutation {
   createUser(input: CreateUserInput!): CreateUserResponse!
   createStore(input: CreateStoreInput!): CreateUserResponse!
   updateStore(input: UpdateStoreInput!): CreateUserResponse!
-  deleteStore(id: ID!): CreateUserResponse!
+  deleteStore(id: Int!): CreateUserResponse!
   createProduct(input: CreateProductInput!): CreateUserResponse!
   updateUser(input: CreateUserInput!): CreateUserResponse!
   addHistorialSearch(input: CreateSearchInput!): CreateHistorialResponse!

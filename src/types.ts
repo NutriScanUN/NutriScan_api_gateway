@@ -257,7 +257,7 @@ export type MutationDeleteHistorialSearchArgs = {
 
 
 export type MutationDeleteStoreArgs = {
-  id: Scalars['ID']['input'];
+  id: Scalars['Int']['input'];
 };
 
 

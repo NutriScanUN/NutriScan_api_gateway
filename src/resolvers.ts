@@ -185,14 +185,12 @@ export const resolvers: Resolvers = {
           code: 200,
           success: true,
           message: "store deleted!",
-          listing: response
         };
       } catch (err) {
         return {
           code: 500,
           success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
+          message: `Something went wrong: ${JSON.stringify(err)}`,
         };
       }
     },
