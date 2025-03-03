@@ -422,7 +422,7 @@ export type Store = {
   enlace?: Maybe<Scalars['String']['output']>;
   fecha_suscripcion: Scalars['String']['output'];
   foto_tienda?: Maybe<Scalars['String']['output']>;
-  id_tienda: Scalars['ID']['output'];
+  id_tienda: Scalars['Int']['output'];
   nombre?: Maybe<Scalars['String']['output']>;
   uid: Scalars['String']['output'];
 };
@@ -432,7 +432,7 @@ export type UpdateStoreInput = {
   direccion?: InputMaybe<Scalars['String']['input']>;
   enlace?: InputMaybe<Scalars['String']['input']>;
   foto_tienda?: InputMaybe<Scalars['String']['input']>;
-  id_tienda: Scalars['ID']['input'];
+  id_tienda: Scalars['Int']['input'];
   nombre?: InputMaybe<Scalars['String']['input']>;
   uid?: InputMaybe<Scalars['String']['input']>;
 };
@@ -838,7 +838,7 @@ export type StoreResolvers<ContextType = any, ParentType extends ResolversParent
   enlace?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fecha_suscripcion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   foto_tienda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id_tienda?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id_tienda?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

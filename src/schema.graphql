@@ -16,7 +16,7 @@ type User {
 }
 
 type Store {
-  id_tienda: ID!
+  id_tienda: Int!
   uid: String!
   nombre: String
   fecha_suscripcion: String!
@@ -216,7 +216,7 @@ input CreateStoreInput {
 }
 
 input UpdateStoreInput {
-  id_tienda: ID!
+  id_tienda: Int!
   uid: String
   nombre: String
   direccion: String
