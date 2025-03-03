@@ -1,5 +1,5 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { Store,CreateStoreInput,Product,CreateProductInput, ProductoOff } from "../types";
+import { Store,CreateStoreInput,Product,CreateProductInput, ProductoOff, UpdateStoreInput } from "../types";
 
 export class StoreAPI extends RESTDataSource {
   
@@ -12,6 +12,11 @@ export class StoreAPI extends RESTDataSource {
         return this.post<any>("/api/store", {
           body: store
         });
+    }
+    updateStore(store: UpdateStoreInput): Promise<any> {
+      return this.put<any>(`/api/store/${store.id_tienda}`, {
+        body: store
+      });
     }
     deleteStore(storeId: String): Promise<any> {
         return this.delete<any>(`/api/store/${storeId}`);

@@ -135,14 +135,28 @@ export const resolvers: Resolvers = {
           code: 200,
           success: true,
           message: "Store successfully created!",
-          listing: response
         };
       } catch (err) {
         return {
           code: 500,
           success: false,
-          message: `Something went wrong: ${err.extensions.response.body}`,
-          listing: null
+          message: `Something went wrong: ${JSON.stringify(err)}`,
+        };
+      }
+    },
+    updateStore: async (_, { input }, { dataSources }) => {
+      try {
+        const response = await dataSources.storeAPI.updateStore(input);
+        return {
+          code: 200,
+          success: true,
+          message: "Store successfully created!",
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          success: false,
+          message: `Something went wrong: ${JSON.stringify(err)}`,
         };
       }
     },

@@ -209,6 +209,7 @@ export type Mutation = {
   deleteHistorialConsumption: DeleteHistorialResponse;
   deleteHistorialSearch: DeleteHistorialResponse;
   deleteStore: CreateUserResponse;
+  updateStore: CreateUserResponse;
   updateUser: CreateUserResponse;
 };
 
@@ -257,6 +258,11 @@ export type MutationDeleteHistorialSearchArgs = {
 
 export type MutationDeleteStoreArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateStoreArgs = {
+  input: UpdateStoreInput;
 };
 
 
@@ -419,6 +425,16 @@ export type Store = {
   id_tienda: Scalars['ID']['output'];
   nombre?: Maybe<Scalars['String']['output']>;
   uid: Scalars['String']['output'];
+};
+
+export type UpdateStoreInput = {
+  descripcion?: InputMaybe<Scalars['String']['input']>;
+  direccion?: InputMaybe<Scalars['String']['input']>;
+  enlace?: InputMaybe<Scalars['String']['input']>;
+  foto_tienda?: InputMaybe<Scalars['String']['input']>;
+  id_tienda: Scalars['ID']['input'];
+  nombre?: InputMaybe<Scalars['String']['input']>;
+  uid?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A user data */
@@ -585,6 +601,7 @@ export type ResolversTypes = {
   Search: ResolverTypeWrapper<Search>;
   Store: ResolverTypeWrapper<Store>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UpdateStoreInput: UpdateStoreInput;
   User: ResolverTypeWrapper<User>;
   UserDays: ResolverTypeWrapper<UserDays>;
   UserRecord: ResolverTypeWrapper<UserRecord>;
@@ -628,6 +645,7 @@ export type ResolversParentTypes = {
   Search: Search;
   Store: Store;
   String: Scalars['String']['output'];
+  UpdateStoreInput: UpdateStoreInput;
   User: User;
   UserDays: UserDays;
   UserRecord: UserRecord;
@@ -748,6 +766,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteHistorialConsumption?: Resolver<ResolversTypes['DeleteHistorialResponse'], ParentType, ContextType, Partial<MutationDeleteHistorialConsumptionArgs>>;
   deleteHistorialSearch?: Resolver<ResolversTypes['DeleteHistorialResponse'], ParentType, ContextType, Partial<MutationDeleteHistorialSearchArgs>>;
   deleteStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationDeleteStoreArgs, 'id'>>;
+  updateStore?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationUpdateStoreArgs, 'input'>>;
   updateUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
 };
 

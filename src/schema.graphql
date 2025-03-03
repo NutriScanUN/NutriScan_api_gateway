@@ -160,6 +160,7 @@ type Mutation {
   "creates a user"
   createUser(input: CreateUserInput!): CreateUserResponse!
   createStore(input: CreateStoreInput!): CreateUserResponse!
+  updateStore(input: UpdateStoreInput!): CreateUserResponse!
   deleteStore(id: ID!): CreateUserResponse!
   createProduct(input: CreateProductInput!): CreateUserResponse!
   updateUser(input: CreateUserInput!): CreateUserResponse!
@@ -207,6 +208,16 @@ input CreateUserInput {
 
 input CreateStoreInput {
   uid: String!
+  nombre: String
+  direccion: String
+  descripcion: String
+  foto_tienda: String
+  enlace: String
+}
+
+input UpdateStoreInput {
+  id_tienda: ID!
+  uid: String
   nombre: String
   direccion: String
   descripcion: String
