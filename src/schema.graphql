@@ -17,12 +17,13 @@ type User {
 
 type Store {
   id_tienda: ID!
-  uid: String
+  uid: String!
   nombre: String
-  fecha_suscripcion: String
+  fecha_suscripcion: String!
   direccion: String
   descripcion: String
-  fotos: String
+  foto_tienda: String
+  enlace: String
 }
 
 type DeleteHistorialResponse {
@@ -205,13 +206,12 @@ input CreateUserInput {
 }
 
 input CreateStoreInput {
-  tienda_id: ID!
-  uid: String
+  uid: String!
   nombre: String
-  fecha_suscripcion: String
   direccion: String
   descripcion: String
-  fotos: String
+  foto_tienda: String
+  enlace: String
 }
 
 input CreateProductInput {

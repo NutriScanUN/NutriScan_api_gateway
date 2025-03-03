@@ -97,11 +97,10 @@ export type CreateSearchInput = {
 export type CreateStoreInput = {
   descripcion?: InputMaybe<Scalars['String']['input']>;
   direccion?: InputMaybe<Scalars['String']['input']>;
-  fecha_suscripcion?: InputMaybe<Scalars['String']['input']>;
-  fotos?: InputMaybe<Scalars['String']['input']>;
+  enlace?: InputMaybe<Scalars['String']['input']>;
+  foto_tienda?: InputMaybe<Scalars['String']['input']>;
   nombre?: InputMaybe<Scalars['String']['input']>;
-  tienda_id: Scalars['ID']['input'];
-  uid?: InputMaybe<Scalars['String']['input']>;
+  uid: Scalars['String']['input'];
 };
 
 export type CreateUserInput = {
@@ -414,11 +413,12 @@ export type Store = {
   __typename?: 'Store';
   descripcion?: Maybe<Scalars['String']['output']>;
   direccion?: Maybe<Scalars['String']['output']>;
-  fecha_suscripcion?: Maybe<Scalars['String']['output']>;
-  fotos?: Maybe<Scalars['String']['output']>;
+  enlace?: Maybe<Scalars['String']['output']>;
+  fecha_suscripcion: Scalars['String']['output'];
+  foto_tienda?: Maybe<Scalars['String']['output']>;
   id_tienda: Scalars['ID']['output'];
   nombre?: Maybe<Scalars['String']['output']>;
-  uid?: Maybe<Scalars['String']['output']>;
+  uid: Scalars['String']['output'];
 };
 
 /** A user data */
@@ -816,11 +816,12 @@ export type SearchResolvers<ContextType = any, ParentType extends ResolversParen
 export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = {
   descripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   direccion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fecha_suscripcion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fotos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  enlace?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fecha_suscripcion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  foto_tienda?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id_tienda?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nombre?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  uid?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
