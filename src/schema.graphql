@@ -226,13 +226,11 @@ input UpdateStoreInput {
 }
 
 input CreateProductInput {
-  id_producto:ID
+  id_tienda: Int
   referencia: String
   nombre: String
   descripcion: String
   url_imagen: String
-  created_at:String
-  updated_at:String
 }
 
 type NutrientesIngeridos {
