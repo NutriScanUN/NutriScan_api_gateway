@@ -76,12 +76,10 @@ export type CreateMiddleHistorialResponse = {
 };
 
 export type CreateProductInput = {
-  created_at?: InputMaybe<Scalars['String']['input']>;
   descripcion?: InputMaybe<Scalars['String']['input']>;
-  id_producto?: InputMaybe<Scalars['ID']['input']>;
+  id_tienda?: InputMaybe<Scalars['Int']['input']>;
   nombre?: InputMaybe<Scalars['String']['input']>;
   referencia?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['String']['input']>;
   url_imagen?: InputMaybe<Scalars['String']['input']>;
 };
 
