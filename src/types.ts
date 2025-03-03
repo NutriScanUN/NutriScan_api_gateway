@@ -317,6 +317,7 @@ export type Query = {
   getProductByStore?: Maybe<Array<Maybe<Product>>>;
   getProductByUser?: Maybe<Array<Maybe<Product>>>;
   getProducts: Array<Maybe<Product>>;
+  getProductsByName?: Maybe<Array<Maybe<Product>>>;
   getStoreByUser?: Maybe<Array<Maybe<Store>>>;
   /** Returns list of all stores */
   getStores?: Maybe<Array<Maybe<Store>>>;
@@ -377,6 +378,11 @@ export type QueryGetProductByStoreArgs = {
 
 export type QueryGetProductByUserArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetProductsByNameArgs = {
+  name: Scalars['String']['input'];
 };
 
 
@@ -442,7 +448,7 @@ export type UserRecord = {
 export type InfoProducto = {
   __typename?: 'infoProducto';
   azucar?: Maybe<Scalars['Float']['output']>;
-  cantidad?: Maybe<Scalars['Int']['output']>;
+  cantidad?: Maybe<Scalars['String']['output']>;
   carbohidratos?: Maybe<Scalars['Float']['output']>;
   energia?: Maybe<Scalars['Float']['output']>;
   fibra?: Maybe<Scalars['Float']['output']>;
@@ -790,6 +796,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getProductByStore?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByStoreArgs>>;
   getProductByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, Partial<QueryGetProductByUserArgs>>;
   getProducts?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
+  getProductsByName?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType, RequireFields<QueryGetProductsByNameArgs, 'name'>>;
   getStoreByUser?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType, Partial<QueryGetStoreByUserArgs>>;
   getStores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
   listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
@@ -842,7 +849,7 @@ export type UserRecordResolvers<ContextType = any, ParentType extends ResolversP
 
 export type InfoProductoResolvers<ContextType = any, ParentType extends ResolversParentTypes['infoProducto'] = ResolversParentTypes['infoProducto']> = {
   azucar?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cantidad?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  cantidad?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   carbohidratos?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   energia?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   fibra?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;

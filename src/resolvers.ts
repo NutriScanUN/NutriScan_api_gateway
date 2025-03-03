@@ -51,6 +51,9 @@ export const resolvers: Resolvers = {
     getInfoOff: (_, { id }, {dataSources}) => {
       return dataSources.storeAPI.getInfoOff(id);
     },
+    getProductsByName: (_, { name }, {dataSources}) => {
+      return dataSources.storeAPI.getProductsByName(name);
+    }
   },
   HistorialData: {
     __resolveType(obj) {

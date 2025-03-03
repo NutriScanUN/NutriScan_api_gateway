@@ -31,6 +31,9 @@ export class StoreAPI extends RESTDataSource {
     getProductByUser(id: String): Promise<Product[]> {
       return this.get<Product[]>(`api/store/user/${id}/products`);
     }
+    getProductsByName(name: String): Promise<Product[]> {
+      return this.get<Product[]>(`api/product/name/${name}`);
+    }
     getProductAndStore(id: String): Promise<Product[]> {
       return this.get<Product[]>(`api/store/${id}/products`);
     }

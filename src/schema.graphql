@@ -140,6 +140,7 @@ type Query {
   getStores: [Store]
   getProducts: [Product]!
   getProduct(id: ID!): Product
+  getProductsByName(name: String!): [Product]
   getProductByStore(storeId: Int): [Product]
   getStoreByUser(id:String):[Store]
   getProductByUser(id:String):[Product]
@@ -295,7 +296,7 @@ type infoProducto {
   unidadFibra: String
   energia: Float
   unidadEnergia: String
-  cantidad: Int
+  cantidad: String
   unidadCantidad: String
   imagenFrontalUrl: String
   nivelesAltos: [String]
